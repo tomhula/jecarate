@@ -1,0 +1,20 @@
+.foodOption {
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+}
+
+.foodOption:hover {
+    border-color: #007BFF;
+    color: #007BFF;
+}
+
+
+.formMessage {
+    margin-bottom: 20px;
+    text-align: center;
+}

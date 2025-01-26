@@ -1,7 +1,11 @@
+import FoodSelector from '@/app/ui/food-rating/food-selector';
 
-export default function Page() {
+export default function Page()
+{
     return (
-        <p>Food review page</p>
-        // <FoodReviewForm />
+        <div>
+            <h1>Choose Your Food</h1>
+            <FoodSelector />
+        </div>
     );
 }
