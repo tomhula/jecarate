@@ -1,10 +1,12 @@
 import React from 'react'
-import styles from '../food-rating.module.css'
+import foodFormStyles from '../food-rating.module.css'
+import utilStyles from '../util.module.css'
+
 
 export function FoodFormQuestion(props: { children: React.ReactNode })
 {
     return (
-        <div className={styles.formQuestion}>
+        <div className={`${foodFormStyles.formQuestion} ${utilStyles.centeredContainerVertical}`}>
             {props.children}
         </div>
     )

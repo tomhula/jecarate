@@ -31,10 +31,12 @@
 }
 
 
-#food-form {
+.message {
     text-align: center;
 }
 
-.message {
-    text-align: center;
+.questionLabel {
+    font-size: 1.7rem;
+    margin: 0.8rem;
+    font-weight: bolder;
 }
