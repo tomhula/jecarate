@@ -78,7 +78,7 @@ export default function FoodSelector()
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Vypadala prezentace jídlo chutně ?</label>
+                        <label className={foodFormStyles.questionLabel}>Vypadala prezentace jídla chutně ?</label>
                         <FoodFormQuestionAnswerContainer>
                             <ClickableDiv action={ () => chosenAnswers.looks = 1 }>Určitě ne</ClickableDiv>
                             <ClickableDiv action={ () => chosenAnswers.looks = 2 }>Spíš ne</ClickableDiv>
