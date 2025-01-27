@@ -15,6 +15,10 @@
     margin-bottom: 20px;
 }
 
+.foodFormQuestionAnswerContainer {
+    font-size: 1.1rem;
+}
+
 .foodOption:hover {
     border-color: #007BFF;
     color: #007BFF;
