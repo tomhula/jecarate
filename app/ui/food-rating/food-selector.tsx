@@ -1,71 +1,95 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { FoodOption } from '@/app/ui/food-rating/food-option';
+import { useState } from 'react'
+import { FoodOption } from '@/app/ui/food-rating/food-option'
 import { FoodFormQuestion } from '@/app/ui/food-rating/food-question'
+import { ClickableDiv } from "@/app/ui/util/clickable-div"
+import {FoodFormQuestionAnswerContainer} from "@/app/ui/food-rating/form-answer-container";
+import foodFormStyles from '../food-rating.module.css'
+
+const chosenAnswers: FormAnswer = {
+    ration: null,
+    taste: null,
+    price: null,
+    temperature: null,
+    looks: null
+}
 
 export default function FoodSelector()
 {
-    const [showForm, setShowForm] = useState(false);
+    const [showForm, setShowForm] = useState(false)
 
-    const handleFoodOptionClick = (food: string) => {
-        console.log(`You chose: ${food}`);
-        setShowForm(true);
-    };
+    const handleFoodOptionClick = () => { setShowForm(true) }
 
     return (
-        <>
-            <div className="food-options">
-                <FoodOption onClick={() => handleFoodOptionClick('Pizza')}>Pizza</FoodOption>
-                <FoodOption onClick={() => handleFoodOptionClick('Burger')}>Burger</FoodOption>
+        <div className={'page-container'}>
+            <div className={foodFormStyles.foodOptions}>
+                <FoodOption onClick={() => handleFoodOptionClick()}>Pizza</FoodOption>
+                <FoodOption onClick={() => handleFoodOptionClick()}>Burger</FoodOption>
             </div>
 
             { !showForm && (
-                    <div id="message" className="message">
+                    <div id="message" className={foodFormStyles.message}>
                         Choose a food
                     </div>
                 )
             }
 
             { showForm && (
-                <form id="food-form">
+                <form id="food-form" method={"post"}>
                     <FoodFormQuestion>
-                        <label htmlFor="q1">What size would you like?</label>
-                        <select id="q1" name="size">
-                            <option value="small">Small</option>
-                            <option value="medium">Medium</option>
-                            <option value="large">Large</option>
-                        </select>
+                        <label className={foodFormStyles.questionLabel}>Byla porce uspokojivá?</label>
+                        <FoodFormQuestionAnswerContainer>
+                            <ClickableDiv action={ () => chosenAnswers.ration = 1 }>Určitě ne</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.ration = 2 }>Spíš ne</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.ration = 3 }>Ano</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.ration = 4 }>Určitě ano</ClickableDiv>
+                        </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label htmlFor="q2">Do you want extra toppings?</label>
-                        <select id="q2" name="toppings">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
+                        <label className={foodFormStyles.questionLabel}>Bylo jídlo chutné?</label>
+                        <FoodFormQuestionAnswerContainer>
+                            <ClickableDiv action={ () => chosenAnswers.taste = 1 }>Určitě ne</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.taste = 2 }>Spíš ne</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.taste = 3 }>Ano</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.taste = 4 }>Určitě ano</ClickableDiv>
+                        </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label htmlFor="q3">What drink would you like?</label>
-                        <select id="q3" name="drink">
-                            <option value="soda">Soda</option>
-                            <option value="water">Water</option>
-                            <option value="juice">Juice</option>
-                        </select>
+                        <label className={foodFormStyles.questionLabel}>Byly by jste ochotni, si za toto jídlo připlatit?</label>
+                        <FoodFormQuestionAnswerContainer>
+                            <ClickableDiv action={ () => chosenAnswers.price = 1 }>Určitě ne</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.price = 2 }>Spíš ne</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.price = 3 }>Ano</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.price = 4 }>Určitě ano</ClickableDiv>
+                        </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label htmlFor="q4">Do you want it delivered?</label>
-                        <select id="q4" name="delivery">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
+                        <label className={foodFormStyles.questionLabel}>Bylo jídlo teplé?</label>
+                        <FoodFormQuestionAnswerContainer>
+                            <ClickableDiv action={ () => chosenAnswers.temperature = 1 }>Určitě ne</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.temperature = 2 }>Spíš ne</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.temperature = 3 }>Ano</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.temperature = 4 }>Určitě ano</ClickableDiv>
+                        </FoodFormQuestionAnswerContainer>
+                    </FoodFormQuestion>
+
+                    <FoodFormQuestion>
+                        <label className={foodFormStyles.questionLabel}>Vypadala prezentace jídla chutně ?</label>
+                        <FoodFormQuestionAnswerContainer>
+                            <ClickableDiv action={ () => chosenAnswers.looks = 1 }>Určitě ne</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.looks = 2 }>Spíš ne</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.looks = 3 }>Ano</ClickableDiv>
+                            <ClickableDiv action={ () => chosenAnswers.looks = 4 }>Určitě ano</ClickableDiv>
+                        </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
                     <button type="submit">Submit</button>
                 </form>
             )}
-        </>
+        </div>
     );
 }

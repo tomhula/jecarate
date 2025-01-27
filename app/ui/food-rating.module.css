@@ -8,6 +8,17 @@
     margin: 0 10px;
 }
 
+.foodOptions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.foodFormQuestionAnswerContainer {
+    font-size: 1.1rem;
+}
+
 .foodOption:hover {
     border-color: #007BFF;
     color: #007BFF;
@@ -17,4 +28,19 @@
 .formMessage {
     margin-bottom: 20px;
     text-align: center;
+}
+
+.formQuestion {
+    margin-bottom: 15px;
+}
+
+
+.message {
+    text-align: center;
+}
+
+.questionLabel {
+    font-size: 1.7rem;
+    margin: 0.8rem;
+    font-weight: bolder;
 }

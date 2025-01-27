@@ -27,37 +27,18 @@ body {
   background-color: #f4f4f9;
 }
 
-.food-options {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.food-option {
-  padding: 10px 20px;
-  background-color: #ffffff;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.food-option:hover {
-  border-color: #007BFF;
-  color: #007BFF;
-}
-
-.message, form {
-  text-align: center;
-}
 
 .hidden {
   display: none;
 }
 
-.form-question {
-  margin-bottom: 15px;
+.page-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 button {
