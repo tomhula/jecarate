@@ -27,38 +27,11 @@ body {
   background-color: #f4f4f9;
 }
 
-.food-options {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.food-option {
-  padding: 10px 20px;
-  background-color: #ffffff;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.food-option:hover {
-  border-color: #007BFF;
-  color: #007BFF;
-}
-
-.message, form {
-  text-align: center;
-}
 
 .hidden {
   display: none;
 }
 
-.form-question {
-  margin-bottom: 15px;
-}
 
 button {
   padding: 10px 20px;
