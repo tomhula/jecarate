@@ -4,7 +4,6 @@ export default function Page()
 {
     return (
         <div>
-            <h1>Choose Your Food</h1>
             <FoodSelector />
         </div>
     );

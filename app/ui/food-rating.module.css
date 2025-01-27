@@ -30,7 +30,11 @@
     margin-bottom: 15px;
 }
 
-.message, form {
+
+#food-form {
     text-align: center;
 }
 
+.message {
+    text-align: center;
+}
