@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { FoodOption } from '@/app/ui/food-rating/food-option';
 import { FoodFormQuestion } from '@/app/ui/food-rating/food-question'
+import styles from '../food-rating.module.css'
 
 export default function FoodSelector()
 {
@@ -15,13 +16,13 @@ export default function FoodSelector()
 
     return (
         <>
-            <div className="food-options">
+            <div className={styles.foodOptions}>
                 <FoodOption onClick={() => handleFoodOptionClick('Pizza')}>Pizza</FoodOption>
                 <FoodOption onClick={() => handleFoodOptionClick('Burger')}>Burger</FoodOption>
             </div>
 
             { !showForm && (
-                    <div id="message" className="message">
+                    <div id="message" className={styles.message}>
                         Choose a food
                     </div>
                 )
