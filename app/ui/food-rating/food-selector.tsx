@@ -7,16 +7,16 @@ import { ClickableDiv } from "@/app/ui/util/clickable-div"
 import {FoodFormQuestionAnswerContainer} from "@/app/ui/food-rating/form-answer-container";
 import foodFormStyles from '../food-rating.module.css'
 
-const chosenAnswers: FormAnswer = {
-    ration: null,
-    taste: null,
-    price: null,
-    temperature: null,
-    looks: null
-}
-
 export default function FoodSelector()
 {
+    const chosenAnswers: FormAnswer = {
+        ration: null,
+        taste: null,
+        price: null,
+        temperature: null,
+        looks: null
+    }
+
     const [showForm, setShowForm] = useState(false)
 
     const handleFoodOptionClick = () => { setShowForm(true) }
@@ -68,7 +68,7 @@ export default function FoodSelector()
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Bylo jídlo teplé?</label>
+                        <label className={foodFormStyles.questionLabel}>Mělo jídlo správnou teplotu</label>
                         <FoodFormQuestionAnswerContainer>
                             <ClickableDiv action={ () => chosenAnswers.temperature = 1 }>Určitě ne</ClickableDiv>
                             <ClickableDiv action={ () => chosenAnswers.temperature = 2 }>Spíš ne</ClickableDiv>
