@@ -1,66 +1,62 @@
 import { lusitana } from '@/app/ui/fonts';
-import {
-  AtSymbolIcon,
-  KeyIcon,
-  ExclamationCircleIcon,
-} from '@heroicons/react/24/outline';
-import { ArrowRightIcon } from '@heroicons/react/20/solid';
-
 export default function LoginForm() {
   return (
-    <form className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-        <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-          Please log in to continue.
-        </h1>
-        <div className="w-full">
-          <div>
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <div className="relative">
+      <div className="flex min-h-screen items-center justify-center px-6 bg-gray-100">
+        {/* Blur Overlay */}
+        <form className="w-full max-w-lg rounded-xl bg-white p-16 shadow-1xl">
+          {/* Title */}
+          <h1 className="mb-10 text-center text-4xl font-bold text-gray-900">
+            Login
+          </h1>
+
+          <div className="space-y-8">
+            {/* Email Input */}
+            <div>
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                required
+                  className="block w-full rounded-xl border border-gray-300 bg-gray-50 px-6 py-4 text-xl text-gray-900 placeholder-gray-400 focus:border-blue-700 focus:ring-2 focus:ring-blue-700"
+                  type="email"
+                  placeholder="Enter email"
+                  required
               />
-              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
-          </div>
-          <div className="mt-4">
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <div className="relative">
+
+            {/* Password Input */}
+            <div>
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                required
-                minLength={6}
+                  className="block w-full rounded-xl border border-gray-300 bg-gray-50 px-6 py-4 text-xl text-gray-900 placeholder-gray-400 focus:border-blue-700 focus:ring-2 focus:ring-blue-700"
+                  type="password"
+                  placeholder="Enter password"
+                  required
+                  minLength={6}
               />
-              <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
+
+            {/* Sign In Button */}
+            <button
+                className="w-full rounded-xl bg-blue-500 py-4 text-xl font-bold text-white transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                type="submit"
+            >
+              SIGN IN
+            </button>
+
+            {/* Divider */}
+            <div className="flex items-center my-6">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="mx-4 text-gray-500">Login with other accounts</span>
+              <div className="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            {/* Microsoft Login Button */}
+            <button
+                className="w-full flex items-center justify-center rounded-xl border border-gray-300 bg-white py-4 text-xl font-bold text-gray-700 transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                type="button"
+            >
+              <img src="/microsoft_logo.png" alt="Microsoft Logo" className="h-6 w-6 mr-3"/>
+
+              Sign in with Microsoft
+            </button>
           </div>
-        </div>
-        <button className="mt-4 w-full">
-          Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-        </button>
-        <div className="flex h-8 items-end space-x-1">
-          {/* Add form errors here */}
-        </div>
+        </form>
       </div>
-    </form>
   );
 }
