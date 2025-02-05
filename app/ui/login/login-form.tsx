@@ -1,4 +1,3 @@
-import { lusitana } from '@/app/ui/fonts';
 import InputField from "@/app/ui/util/input-field";
 import Image from "next/image";
 
@@ -19,12 +18,12 @@ export default function LoginForm({ postUrl }: LoginFormProps) {
           <div className="space-y-8">
             {/* Email Input */}
             <div>
-              <InputField type={"email"} placeholder={"Enter your email"} required={true} minLength={0} name="email" />
+              <InputField type="email" placeholder="Enter your email" required minLength={0} name="email" />
             </div>
 
             {/* Password Input */}
             <div>
-              <InputField type={"password"} placeholder={"Enter your password"} required={true} minLength={6} name="password" />
+              <InputField type="password" placeholder="Enter your password" required minLength={6} name="password" />
             </div>
 
             {/* Sign In Button */}
@@ -47,7 +46,7 @@ export default function LoginForm({ postUrl }: LoginFormProps) {
                 className="w-full flex items-center justify-center rounded-xl border border-gray-300 bg-white py-4 text-xl font-bold text-gray-700 transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                 type="button"
             >
-              <Image src="/microsoft_logo.png" width={512} height={512} alt="Microsoft Logo" className="h-6 w-6 mr-3"/>
+              <Image src="/microsoft_logo.png" width={512} height={512} alt="Microsoft Logo" className="h-6 w-6 mr-3" />
 
               Sign in with Microsoft
             </button>
