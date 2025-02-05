@@ -1,7 +1,7 @@
 'use client'
 
 import React from "react";
-import styles from '../util.module.css'
+import styles from './util.module.css'
 
 export function ClickableDiv(props: { children: React.ReactNode, action: () => void })
 {

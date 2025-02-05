@@ -5,21 +5,21 @@ import { FoodOption } from '@/app/ui/food-rating/food-option'
 import { FoodFormQuestion } from '@/app/ui/food-rating/food-question'
 import { ClickableDiv } from "@/app/ui/util/clickable-div"
 import {FoodFormQuestionAnswerContainer} from "@/app/ui/food-rating/form-answer-container";
-import foodFormStyles from '../food-rating.module.css'
-
-const chosenAnswers: FormAnswer = {
-    ration: null,
-    taste: null,
-    price: null,
-    temperature: null,
-    looks: null
-}
+import foodFormStyles from './food-rating.module.css'
 
 export default function FoodSelector()
 {
     const [showForm, setShowForm] = useState(false)
 
     const handleFoodOptionClick = () => { setShowForm(true) }
+
+    const chosenAnswers: FormAnswer = {
+        ration: null,
+        taste: null,
+        price: null,
+        temperature: null,
+        looks: null
+    }
 
     return (
         <div className={'page-container'}>
