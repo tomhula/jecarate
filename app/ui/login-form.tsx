@@ -1,4 +1,6 @@
 import { lusitana } from '@/app/ui/fonts';
+import InputField from "@/app/ui/util/input-field";
+import Image from "next/image";
 export default function LoginForm() {
   return (
       <div className="flex min-h-screen items-center justify-center px-6 bg-gray-100">
@@ -12,23 +14,12 @@ export default function LoginForm() {
           <div className="space-y-8">
             {/* Email Input */}
             <div>
-              <input
-                  className="block w-full rounded-xl border border-gray-300 bg-gray-50 px-6 py-4 text-xl text-gray-900 placeholder-gray-400 focus:border-blue-700 focus:ring-2 focus:ring-blue-700"
-                  type="email"
-                  placeholder="Enter email"
-                  required
-              />
+               <InputField type={"email"} placeholder={"Enter your email"} required={true} minLength={0} />
             </div>
 
             {/* Password Input */}
             <div>
-              <input
-                  className="block w-full rounded-xl border border-gray-300 bg-gray-50 px-6 py-4 text-xl text-gray-900 placeholder-gray-400 focus:border-blue-700 focus:ring-2 focus:ring-blue-700"
-                  type="password"
-                  placeholder="Enter password"
-                  required
-                  minLength={6}
-              />
+              <InputField type={"password"} placeholder={"Enter your password"} required={true} minLength={6} />
             </div>
 
             {/* Sign In Button */}
@@ -51,7 +42,7 @@ export default function LoginForm() {
                 className="w-full flex items-center justify-center rounded-xl border border-gray-300 bg-white py-4 text-xl font-bold text-gray-700 transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                 type="button"
             >
-              <img src="/microsoft_logo.png" alt="Microsoft Logo" className="h-6 w-6 mr-3"/>
+              <Image src="/microsoft_logo.png" width={512} height={512} alt="Microsoft Logo" className="h-6 w-6 mr-3"/>
 
               Sign in with Microsoft
             </button>
