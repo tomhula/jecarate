@@ -1,6 +1,6 @@
 'use client'
 
-import styles from '../food-rating.module.css'
+import styles from './food-rating.module.css'
 
 export function FoodOption(props: { children: string; onClick: () => void })
 {
