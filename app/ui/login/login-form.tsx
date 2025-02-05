@@ -1,11 +1,16 @@
 import { lusitana } from '@/app/ui/fonts';
 import InputField from "@/app/ui/util/input-field";
 import Image from "next/image";
-export default function LoginForm() {
+
+interface LoginFormProps {
+  postUrl: string;
+}
+
+export default function LoginForm({ postUrl }: LoginFormProps) {
   return (
       <div className="flex min-h-screen items-center justify-center px-6 bg-gray-100">
         {/* Blur Overlay */}
-        <form className="w-full max-w-lg rounded-xl bg-white p-16 shadow-1xl">
+        <form action={postUrl} method="POST" className="w-full max-w-lg rounded-xl bg-white p-16 shadow-1xl">
           {/* Title */}
           <h1 className="mb-10 text-center text-4xl font-bold text-gray-900">
             Login
@@ -14,12 +19,12 @@ export default function LoginForm() {
           <div className="space-y-8">
             {/* Email Input */}
             <div>
-               <InputField type={"email"} placeholder={"Enter your email"} required={true} minLength={0} />
+              <InputField type={"email"} placeholder={"Enter your email"} required={true} minLength={0} name="email" />
             </div>
 
             {/* Password Input */}
             <div>
-              <InputField type={"password"} placeholder={"Enter your password"} required={true} minLength={6} />
+              <InputField type={"password"} placeholder={"Enter your password"} required={true} minLength={6} name="password" />
             </div>
 
             {/* Sign In Button */}

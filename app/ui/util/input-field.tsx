@@ -1,4 +1,4 @@
-export default function InputField(props: { type: string, placeholder: string, required: boolean, minLength: number })
+export default function InputField(props: { type: string, placeholder: string, required: boolean, minLength: number, name: string })
 {
     return (
         <input
@@ -7,6 +7,7 @@ export default function InputField(props: { type: string, placeholder: string, r
             placeholder={props.placeholder}
             required={props.required}
             minLength={props.minLength ?? 0}
+            name={props.name}
         />
     );
 }

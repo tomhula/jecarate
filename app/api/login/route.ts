@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import {redirect} from "next/navigation";
 
 export async function GET()
 {
@@ -7,5 +8,5 @@ export async function GET()
 
 export async function POST()
 {
-    return NextResponse.json( { message: "Hello from login POST" } );
+    return redirect('/food-rating');
 }
