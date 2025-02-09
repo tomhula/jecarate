@@ -5,10 +5,15 @@ import { FoodOption } from '@/app/ui/food-rating/food-option'
 import { FoodFormQuestion } from '@/app/ui/food-rating/food-question'
 import { ClickableDiv } from "@/app/ui/util/clickable-div"
 import {FoodFormQuestionAnswerContainer} from "@/app/ui/food-rating/form-answer-container";
-import foodFormStyles from '../food-rating.module.css'
+import foodFormStyles from './food-rating.module.css'
+import RatingSlider from "@/app/ui/food-rating/rating-slider";
 
 export default function FoodSelector()
 {
+    const [showForm, setShowForm] = useState(false)
+
+    const handleFoodOptionClick = () => { setShowForm(true) }
+
     const chosenAnswers: FormAnswer = {
         ration: null,
         taste: null,
@@ -16,10 +21,23 @@ export default function FoodSelector()
         temperature: null,
         looks: null
     }
-
-    const [showForm, setShowForm] = useState(false)
-
-    const handleFoodOptionClick = () => { setShowForm(true) }
+    
+    function ratingLabelMap(rating: number)
+    {
+        switch (rating)
+        {
+            case 0:
+                return "Určitě ne";
+            case 1:
+                return "Spíš ne";
+            case 2:
+                return "Ano";
+            case 3:
+                return "Určitě ano";
+            default:
+                return "";
+        }
+    }
 
     return (
         <div className={'page-container'}>
@@ -39,51 +57,34 @@ export default function FoodSelector()
                 <form id="food-form" method={"post"}>
                     <FoodFormQuestion>
                         <label className={foodFormStyles.questionLabel}>Byla porce uspokojivá?</label>
-                        <FoodFormQuestionAnswerContainer>
-                            <ClickableDiv action={ () => chosenAnswers.ration = 1 }>Určitě ne</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.ration = 2 }>Spíš ne</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.ration = 3 }>Ano</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.ration = 4 }>Určitě ano</ClickableDiv>
-                        </FoodFormQuestionAnswerContainer>
+                            <RatingSlider labelMap={ratingLabelMap} onChange={ val => chosenAnswers.ration = val }></RatingSlider>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
                         <label className={foodFormStyles.questionLabel}>Bylo jídlo chutné?</label>
                         <FoodFormQuestionAnswerContainer>
-                            <ClickableDiv action={ () => chosenAnswers.taste = 1 }>Určitě ne</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.taste = 2 }>Spíš ne</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.taste = 3 }>Ano</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.taste = 4 }>Určitě ano</ClickableDiv>
+                            <RatingSlider labelMap={ratingLabelMap} onChange={ val => chosenAnswers.taste = val }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Byly by jste ochotni, si za toto jídlo připlatit?</label>
+                        <label className={foodFormStyles.questionLabel}>Byli by jste ochotni, si za toto jídlo připlatit?</label>
                         <FoodFormQuestionAnswerContainer>
-                            <ClickableDiv action={ () => chosenAnswers.price = 1 }>Určitě ne</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.price = 2 }>Spíš ne</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.price = 3 }>Ano</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.price = 4 }>Určitě ano</ClickableDiv>
+                            <RatingSlider labelMap={ratingLabelMap} onChange={ val => chosenAnswers.price = val }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Mělo jídlo správnou teplotu</label>
+                        <label className={foodFormStyles.questionLabel}>Mělo jídlo správnou teplotu?</label>
                         <FoodFormQuestionAnswerContainer>
-                            <ClickableDiv action={ () => chosenAnswers.temperature = 1 }>Určitě ne</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.temperature = 2 }>Spíš ne</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.temperature = 3 }>Ano</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.temperature = 4 }>Určitě ano</ClickableDiv>
+                            <RatingSlider labelMap={ratingLabelMap} onChange={ val => chosenAnswers.temperature = val }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
                         <label className={foodFormStyles.questionLabel}>Vypadala prezentace jídla chutně ?</label>
                         <FoodFormQuestionAnswerContainer>
-                            <ClickableDiv action={ () => chosenAnswers.looks = 1 }>Určitě ne</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.looks = 2 }>Spíš ne</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.looks = 3 }>Ano</ClickableDiv>
-                            <ClickableDiv action={ () => chosenAnswers.looks = 4 }>Určitě ano</ClickableDiv>
+                            <RatingSlider labelMap={ratingLabelMap} onChange={ val => chosenAnswers.looks = val }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 

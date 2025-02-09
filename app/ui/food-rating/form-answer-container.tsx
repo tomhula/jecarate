@@ -1,6 +1,6 @@
 import React from 'react'
-import utilStyles from '../util.module.css'
-import foodFormStyles from '../food-rating.module.css'
+import utilStyles from '../util/util.module.css'
+import foodFormStyles from './food-rating.module.css'
 
 export function FoodFormQuestionAnswerContainer(props: { children: React.ReactNode })
 {
