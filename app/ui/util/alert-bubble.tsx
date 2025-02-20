@@ -39,7 +39,7 @@ export default function AlertBubble(bubbleProps: AlertBubbleProps)
             setIsFadingOut(true)
             setTimeout(() => bubbleProps.onClose(), 700)
 
-        }, 8000)
+        }, 15000)
         return () => clearTimeout(timer)
     }, [])
 
@@ -48,6 +48,10 @@ export default function AlertBubble(bubbleProps: AlertBubbleProps)
             <p className="text-center text-lg font-semibold">
                 {bubbleProps.message}
             </p>
+            <button className={`${styles.alertBubbleXMark} ${bubbleColor}`} onClick={() => {
+                setIsFadingOut(true)
+                setTimeout(() => bubbleProps.onClose(), 700)
+            }}>✖</button>
         </div>
     )
 }
