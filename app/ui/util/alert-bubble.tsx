@@ -3,7 +3,7 @@
 import styles from "./util.module.css"
 import { useEffect, useRef, useState } from "react"
 
-interface AlertBubbleProps
+export interface AlertBubbleProps
 {
     level: "error" | "warning" | "info" | "success"
     message: string

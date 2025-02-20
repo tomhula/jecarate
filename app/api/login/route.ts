@@ -1,44 +1,49 @@
-import {NextResponse} from "next/server";
-import {ICanteenWebClient} from "@/app/lib/icanteen-web-client";
-import {redirect} from "next/navigation";
+import { NextResponse } from "next/server"
+import { ICanteenWebClient } from "@/app/lib/icanteen-web-client"
+import { JWTHandler } from "@/app/lib/jwt"
+
+const jwtHandler = new JWTHandler()
 
 export async function GET(req: Request)
 {
-    const {searchParams} = new URL(req.url);
-    const username = searchParams.get("username");
-    const password = searchParams.get("password");
+    
+}
+
+export async function POST(reg: Request)
+{
+    const { username, password } = await reg.json()
+
+    console.log(`Received login request for user ${username} with password ${password}`)
 
     if (!username || !password)
     {
-        return NextResponse.json({error: "Username and password are required"}, {status: 400});
+        return NextResponse.json({ error: "Username and password are required" }, { status: 400 })
     }
 
-    const auth = {username, password};
-    const canteenClient = new ICanteenWebClient();
+    const auth = { username, password }
+    const canteenClient = new ICanteenWebClient()
 
     try
     {
-        const loginSuccess = await canteenClient.login(auth);
+        const loginSuccess = await canteenClient.login(auth)
         if (loginSuccess)
         {
-            return NextResponse.json({message: `Login successful for ${username}`});
-        } else
-        {
-            return NextResponse.json({error: "Invalid credentials"}, {status: 401});
+            const token = jwtHandler.signJWT({ username: username }, { expiresIn: '15m' })
+            return NextResponse.json({ token: token })
         }
-    } catch (e)
+        else
+        {
+            return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
+        }
+    }
+    catch (e)
     {
         return NextResponse.json(
             {
                 error: "An error occurred during login",
                 details: e instanceof Error ? e.message : String(e)
             },
-            {status: 500}
-        );
+            { status: 500 }
+        )
     }
-}
-
-export async function POST()
-{
-    return redirect("/food-rating");
 }
