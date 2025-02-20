@@ -6,7 +6,25 @@ const jwtHandler = new JWTHandler()
 
 export async function GET(req: Request)
 {
-    
+    const { searchParams } = new URL(req.url);
+    const token = searchParams.get('token');
+
+    if (!token)
+    {
+        return NextResponse.json({ error: "Token is required" }, { status: 400 });
+    }
+
+    const verifiedToken = jwtHandler.verifyJWT(token);
+
+    if ('error' in verifiedToken)
+    {
+        if (verifiedToken.error === 'TokenExpiredError')
+            return NextResponse.json({ error: "Token is expired" }, { status: 400 });
+
+        return NextResponse.json({ error: "Token is invalid" }, { status: 400 });
+    }
+
+    return NextResponse.json({ message: "Token is valid", data: verifiedToken });
 }
 
 export async function POST(reg: Request)

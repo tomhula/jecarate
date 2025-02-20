@@ -3,13 +3,15 @@
 import { useState } from 'react'
 import { FoodOption } from '@/app/ui/food-rating/food-option'
 import { FoodFormQuestion } from '@/app/ui/food-rating/food-question'
-import { ClickableDiv } from "@/app/ui/util/clickable-div"
-import {FoodFormQuestionAnswerContainer} from "@/app/ui/food-rating/form-answer-container";
+import { FoodFormQuestionAnswerContainer } from "@/app/ui/food-rating/form-answer-container";
 import foodFormStyles from './food-rating.module.css'
 import RatingSlider from "@/app/ui/food-rating/rating-slider";
+import { authorize } from "@/app";
 
 export default function FoodSelector()
 {
+    authorize()
+
     const [showForm, setShowForm] = useState(false)
 
     const handleFoodOptionClick = () => { setShowForm(true) }
