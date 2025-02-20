@@ -1,3 +1,5 @@
+'use client'
+
 import { redirect } from "next/navigation"
 import { authorize } from "@/app"
 import LunchGrid from "@/app/ui/dashboard/lunch-grid"
@@ -5,8 +7,8 @@ import dashboardStyles from "@/app/ui/dashboard/dashboard.module.css"
 
 export default function Dashboard()
 {
-    /*if (!authorize())
-        redirect('/login')*/
+    if (!authorize())
+        redirect('/login')
 
     return (
         <>
