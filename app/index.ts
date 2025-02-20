@@ -8,14 +8,15 @@ export function authorize()
         window.location.href = '/login';
         return false;
     }
-    const response = fetch(`/api/login?token=${ token }`)
-    .then((response) =>
-        {
-            return response;
-        }
-    ).catch((error) =>
-        {
-            return error;
-        }
-    );
+    fetch(`/api/login?token=${ token }`)
+        .then((response) =>
+            {
+                return response;
+            }
+        )
+        .catch((error) =>
+            {
+                return error;
+            }
+        );
 }
