@@ -2,6 +2,8 @@
 
 export function authorize()
 {
+    if (typeof window === "undefined") return;
+
     const token = localStorage.getItem('token');
     if (!token)
     {
