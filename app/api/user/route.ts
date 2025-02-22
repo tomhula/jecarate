@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { query } from "@/app/lib/db";
+import { query } from "@/app/lib/db.server";
 
 /**
  * Returns a JSON response with all user submissions

@@ -1,6 +1,10 @@
+'use server'
+
 import mysql from 'mysql2/promise';
 import fs from 'fs';
 import path from 'path';
+import { getJecaratePath } from "@/app/lib/util";
+import * as process from "node:process";
 
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
@@ -17,7 +21,7 @@ export async function executeSQLScript(): Promise<boolean>
 {
     try
     {
-        const scriptPath = path.join(__dirname, '../../sql/script.sql') // Adjust path if needed
+        const scriptPath = path.join(getJecaratePath(process.cwd()), '/sql/script.sql') // Adjust path if needed
         const script = fs.readFileSync(scriptPath, 'utf8');
 
         const connection = await pool.getConnection();
