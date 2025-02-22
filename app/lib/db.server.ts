@@ -13,7 +13,7 @@ const pool = mysql.createPool({
     queueLimit: 0,
 });
 
-export async function executeSQLScript()
+export async function executeSQLScript(): Promise<boolean>
 {
     try
     {
@@ -30,10 +30,12 @@ export async function executeSQLScript()
 
         connection.release();
         console.log('SQL script executed successfully');
+        return true;
     }
     catch (error)
     {
         console.error('Error executing SQL script:', error);
+        return false;
     }
 }
 
@@ -41,4 +43,3 @@ export async function query(sql: string, values: any)
 {
     return pool.query(sql, values);
 }
-
