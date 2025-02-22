@@ -51,15 +51,21 @@
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
 }
 
-.lunchCard h3 {
+.lunchCardName {
     margin: 0 0 10px;
     font-size: 18px;
+    font-weight: bold;
+}
+
+.lunchCardFieldName {
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .lunchCard p {
+    display: inline;
     margin: 5px 0;
     color: #555;
 }

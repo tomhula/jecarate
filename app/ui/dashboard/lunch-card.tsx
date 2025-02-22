@@ -12,9 +12,9 @@ export default function LunchCard({name, date, rating}: LunchCardProps)
 {
     return (
         <div className={styles.lunchCard}>
-            <h3>{name}</h3>
-            <p>Date: {date}</p>
-            <p>Average Rating: {rating}</p>
+            <h3 className={styles.lunchCardName}>{name}</h3>
+            <div className={styles.lunchCardFieldName}>Date: <p>{date}</p></div>
+            <div className={styles.lunchCardFieldName}>Rating: <p>{rating}</p></div>
         </div>
     )
 }
