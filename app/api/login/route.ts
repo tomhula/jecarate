@@ -30,9 +30,7 @@ export async function GET(req: Request)
 export async function POST(reg: Request)
 {
     const { username, password } = await reg.json()
-
-    console.log(`Received login request for user ${username} with password ${password}`)
-
+    
     if (!username || !password)
     {
         return NextResponse.json({ error: "Username and password are required" }, { status: 400 })

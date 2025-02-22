@@ -7,6 +7,7 @@ import { FoodFormQuestionAnswerContainer } from "@/app/ui/food-rating/form-answe
 import foodFormStyles from './food-rating.module.css'
 import RatingSlider from "@/app/ui/food-rating/rating-slider";
 import { authorize } from "@/app";
+import { FormAnswer } from "@/app/lib/util";
 
 export default function FoodSelector()
 {
