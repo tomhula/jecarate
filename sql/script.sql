@@ -18,3 +18,16 @@ CREATE TABLE IF NOT EXISTS `lunch_rating`
     `lunch_date` date                                          NOT NULL,
     FOREIGN KEY (food_id) REFERENCES food (id)
 );
+
+DROP VIEW IF EXISTS `all_ratings`;
+
+CREATE VIEW `all_ratings` AS
+SELECT
+    `lunch_rating`.`id` AS `rating_id`,
+    `food`.`name` AS `food_name`,
+    `lunch_rating`.`rating`,
+    `lunch_rating`.`lunch_date`
+FROM
+    `lunch_rating`
+        JOIN
+    `food` ON `lunch_rating`.`food_id` = `food`.`id`;
