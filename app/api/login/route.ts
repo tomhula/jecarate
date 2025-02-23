@@ -24,7 +24,7 @@ export async function GET(req: Request)
         return NextResponse.json({ error: "Token is invalid" }, { status: 400 });
     }
 
-    return NextResponse.json({ message: "Token is valid", data: verifiedToken });
+    return NextResponse.json({ message: "Token is valid", data: verifiedToken }, { status: 200 });
 }
 
 export async function POST(reg: Request)
