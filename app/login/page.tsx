@@ -8,9 +8,10 @@ export default function Page()
 {
     useEffect(() =>
     {
-        if (document.referrer.includes("/food-rating"))
+        if (document.referrer.includes("/food-rating") || document.referrer.includes("/dashboard"))
             showAlertBubble("error", "You need to be logged in to access this page.");
-    }, []);
+    }, []
+    );
 
     return <LoginForm postUrl={ "/api/login" }/>
 }
