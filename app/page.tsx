@@ -11,7 +11,7 @@ export default function Page()
     useEffect(() =>
     {
         setTimeout(() => {
-            if (!authorize())
+            if (localStorage.getItem('token') === null || !authorize())
                 redirect('/login')
 
             redirect('/dashboard')
