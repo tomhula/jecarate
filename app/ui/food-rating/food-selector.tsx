@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FoodOption } from '@/app/ui/food-rating/food-option'
 import { FoodFormQuestion } from '@/app/ui/food-rating/food-question'
 import { FoodFormQuestionAnswerContainer } from "@/app/ui/food-rating/form-answer-container";
@@ -11,7 +11,11 @@ import { FormAnswer } from "@/app/lib/util";
 
 export default function FoodSelector()
 {
-    authorize()
+    useEffect(() =>
+    {
+        if (!authorize())
+            window.location.href = '/login'
+    }, []);
 
     const [showForm, setShowForm] = useState(false)
 

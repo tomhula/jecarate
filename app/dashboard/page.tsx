@@ -3,10 +3,15 @@
 import { authorize } from "@/app"
 import LunchGrid from "@/app/ui/dashboard/lunch-grid"
 import dashboardStyles from "@/app/ui/dashboard/dashboard.module.css"
+import { useEffect } from "react";
 
 export default function Dashboard()
 {
-    authorize()
+    useEffect(() =>
+    {
+        if (!authorize())
+            window.location.href = '/login'
+    }, []);
 
     return (
         <>

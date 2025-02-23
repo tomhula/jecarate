@@ -2,8 +2,6 @@
 
 export function authorize()
 {
-    if (typeof window === "undefined") return;
-
     const token = localStorage.getItem('token');
     if (!token)
     {
@@ -13,12 +11,17 @@ export function authorize()
     fetch(`/api/login?token=${ token }`)
         .then((response) =>
             {
-                return response;
+                if (!response.ok)
+                {
+                    window.location.href = '/login';
+                }
             }
         )
         .catch((error) =>
             {
-                return error;
+                window.location.href = '/login';
             }
         );
+
+    return true;
 }

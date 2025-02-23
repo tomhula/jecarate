@@ -2,11 +2,16 @@
 
 import { redirect } from 'next/navigation'
 import { authorize } from "@/app/index";
+import { useEffect } from "react";
 
 export default function Page()
 {
-    if (authorize())
+    useEffect(() =>
+    {
+        if (!authorize())
+            redirect('/login')
+        
         redirect('/dashboard')
-
-    redirect('/login')
+    }, []);
+    
 }
