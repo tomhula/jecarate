@@ -67,7 +67,7 @@ export class ICanteenWebClient
         return token;
     }
 
-    private async query(path: string, parameters: Record<string, string> = {}): Promise<Response>
+    async query(path: string, parameters: Record<string, string> = {}): Promise<Response>
     {
         const url = new URL(`${ICanteenWebClient.ENDPOINT}/${ICanteenWebClient.CANTEEN_CODE}/${path}`);
         Object.entries(parameters).forEach(([key, value]) => url.searchParams.append(key, value));
