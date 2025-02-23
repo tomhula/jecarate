@@ -35,7 +35,7 @@ export default function LoginForm({postUrl}: LoginFormProps)
                     <button
                         className="w-full rounded-xl bg-blue-500 py-4 text-xl font-bold text-white transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         type="button"
-                        onClick={() => authorize(postUrl)}
+                        onClick={() => authenticate(postUrl)}
                     >
                         SIGN IN
                     </button>
@@ -63,7 +63,7 @@ export default function LoginForm({postUrl}: LoginFormProps)
     );
 }
 
-async function authorize(postUrl: string)
+async function authenticate(postUrl: string)
 {
     const username = (document.querySelector('input[name="text"]') as HTMLInputElement).value
     const password = (document.querySelector('input[name="password"]') as HTMLInputElement).value
