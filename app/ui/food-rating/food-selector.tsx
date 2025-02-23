@@ -18,8 +18,16 @@ export default function FoodSelector()
     }, []);
 
     const [showForm, setShowForm] = useState(false)
+    const [selectedId, setSelectedId] = useState<string>('');
 
-    const handleFoodOptionClick = () => { setShowForm(true) }
+    const handleSelect = (id: string) => {
+        setSelectedId(id);
+    };
+
+    const handleFoodOptionClick = (id:string) => {
+        setShowForm(true);
+        handleSelect(id);
+    }
 
     const chosenAnswers: FormAnswer = {
         ration: null,
@@ -49,8 +57,8 @@ export default function FoodSelector()
     return (
         <div className={'page-container'}>
             <div className={foodFormStyles.foodOptions}>
-                <FoodOption onClick={() => handleFoodOptionClick()}>Pizza</FoodOption>
-                <FoodOption onClick={() => handleFoodOptionClick()}>Burger</FoodOption>
+                <FoodOption id="opt1" selectedId={selectedId} onClick={handleFoodOptionClick}>Pizza</FoodOption>
+                <FoodOption id="opt2" selectedId={selectedId} onClick={handleFoodOptionClick}>Burger</FoodOption>
             </div>
 
             { !showForm && (
@@ -95,7 +103,7 @@ export default function FoodSelector()
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
-                    <button type="submit">Submit</button>
+                    <button type="submit" className={foodFormStyles.submitButton}>Submit</button>
                 </form>
             )}
         </div>
