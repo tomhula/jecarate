@@ -90,5 +90,5 @@ async function authenticate(postUrl: string)
 
     const {token} = await response.json()
     localStorage.setItem('token', token)
-    window.location.href = '/food-rating'
+    window.location.href = '/dashboard'
 }
