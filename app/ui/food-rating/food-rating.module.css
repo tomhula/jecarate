@@ -1,7 +1,7 @@
 .foodOption {
     text-align: center;
-    width: 150px;
     height: 60px;
+    padding: 0 20px;
     line-height:60px;
     border: 2px solid #315cfd;
     border-radius: 5px;
@@ -84,4 +84,3 @@
     color: white;
     font-size: 1.2em;
 }
-

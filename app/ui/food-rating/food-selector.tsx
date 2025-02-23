@@ -8,23 +8,48 @@ import foodFormStyles from './food-rating.module.css'
 import RatingSlider from "@/app/ui/food-rating/rating-slider";
 import { authorize } from "@/app";
 import { FormAnswer } from "@/app/lib/util";
+import {DayMenu, MenuItem} from "@/app/lib/canteen/CanteenMenuParser";
 
 export default function FoodSelector()
 {
+    const [showForm, setShowForm] = useState(false);
+    const [selectedId, setSelectedId] = useState<string>('');
+    const [menuItems, setMenuItems] = useState<MenuItem[] | null>(null); // To store fetched menu items as objects, initially null
+
     useEffect(() =>
     {
         if (!authorize())
-            window.location.href = '/login'
+        {
+            window.location.href = '/login';
+            return;
+        }
+
+        fetch('/api/todays-menu')
+            .then(response =>
+            {
+                if (!response.ok)
+                {
+                    return { items: [] };
+                }
+                return response.json();
+            })
+            .then((data: DayMenu) =>
+            {
+                setMenuItems(data.items); // Assumes the response includes { items: MenuItem[] }
+            })
+            .catch(error =>
+            {
+                console.error("Error fetching menu:", error);
+            });
     }, []);
 
-    const [showForm, setShowForm] = useState(false)
-    const [selectedId, setSelectedId] = useState<string>('');
-
-    const handleSelect = (id: string) => {
+    const handleSelect = (id: string) =>
+    {
         setSelectedId(id);
     };
 
-    const handleFoodOptionClick = (id:string) => {
+    const handleFoodOptionClick = (id: string) =>
+    {
         setShowForm(true);
         handleSelect(id);
     }
@@ -57,8 +82,23 @@ export default function FoodSelector()
     return (
         <div className={'page-container'}>
             <div className={foodFormStyles.foodOptions}>
-                <FoodOption id="opt1" selectedId={selectedId} onClick={handleFoodOptionClick}>Pizza</FoodOption>
-                <FoodOption id="opt2" selectedId={selectedId} onClick={handleFoodOptionClick}>Burger</FoodOption>
+                { menuItems != null ? (
+                    menuItems.length == 0 ?
+                        <div>No menu for today</div>
+                    :
+                        menuItems.map((item) => (
+                            <FoodOption
+                                key={item.number}
+                                id={item.number.toString()}
+                                selectedId={selectedId}
+                                onClick={() => handleFoodOptionClick(item.number.toString())}
+                            >
+                                {item.description}
+                            </FoodOption>
+                        ))
+                ) : (
+                    <div>Loading menu...</div>
+                )}
             </div>
 
             { !showForm && (
@@ -69,7 +109,7 @@ export default function FoodSelector()
             }
 
             { showForm && (
-                <form id="food-form" method={"post"}>
+                <form id="food-form" method="post">
                     <FoodFormQuestion>
                         <label className={foodFormStyles.questionLabel}>Byla porce uspokojivá?</label>
                             <RatingSlider labelMap={ratingLabelMap} onChange={ val => chosenAnswers.ration = val }></RatingSlider>
