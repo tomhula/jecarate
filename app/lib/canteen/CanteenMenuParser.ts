@@ -4,6 +4,7 @@ import {JSDOM} from "jsdom";
 export interface MenuItem
 {
     number: number;
+    soup: string;
     description: string;
 }
 
@@ -37,8 +38,10 @@ export async function getMenu(): Promise<DayMenu[]>
         const menuItemEles = Array.from(dayEle.querySelectorAll(".container")).slice(0, 2);
         menuItemEles.forEach((menuItemEle, index) => {
             const number = index + 1;
-            const description = menuItemEle.querySelector(".column.jidelnicekItem")!.childNodes[0].textContent!!.replace(/[\t\n]| {2}/g, "").replaceAll("  ", " ").replace(" ,", ",").trim();
-            items.push({number, description});
+            const fullName = menuItemEle.querySelector(".column.jidelnicekItem")!.childNodes[0].textContent!!.replace(/[\t\n]| {2}/g, "").replaceAll("  ", " ").replace(" ,", ",").trim();
+            const [soup, ...descriptionParts] = fullName.split(", ");
+            const description = descriptionParts.join(", ");
+            items.push({number, soup, description});
         })
         dayMenus.push({date, items});
     }
