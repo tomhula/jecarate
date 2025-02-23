@@ -3,6 +3,7 @@
 import dashboardStyles from './dashboard.module.css'
 import LunchCard from "@/app/ui/dashboard/lunch-card"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { authorize } from "@/app";
 
 export default function LunchGrid()
 {
@@ -10,6 +11,8 @@ export default function LunchGrid()
 
     useEffect(() =>
     {
+        if (!authorize())
+            window.location.href = '/login'
         getAllStates(setAllRatings)
     }, [])
 
