@@ -5,7 +5,7 @@ export async function GET()
 {
     try
     {
-        const [queryResult, _] = await query("SELECT * FROM lunch_rating", []);
+        const [queryResult, _] = await query("SELECT * FROM all_ratings", []);
         return NextResponse.json(queryResult);
     }
     catch (error)
