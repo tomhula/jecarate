@@ -1,15 +1,47 @@
 'use client'
+
 import dashboardStyles from './dashboard.module.css'
-import LunchCard from "@/app/ui/dashboard/lunch-card";
+import LunchCard from "@/app/ui/dashboard/lunch-card"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 
 export default function LunchGrid()
 {
+    const [allRatings, setAllRatings] = useState<{ name: string, rating: number, date: string }[]>([])
+
+    useEffect(() =>
+    {
+        getAllStates(setAllRatings)
+    }, [])
+
+    function getAllStates(setAllRatings: Dispatch<SetStateAction<{ name: string, rating : number, date: string }[]>>)
+    {
+        fetch("/api/food-ratings")
+            .then((response) => response.json())
+            .then((json) => json as { rating_id: number, food_name: string, rating: number, lunch_date: string }[])
+            .then((ratings) =>
+            {
+                const formattedRatings = ratings
+                    .map((row) => (
+                        {
+                            name: row.food_name,
+                            rating: row.rating,
+                            date: new Date(row.lunch_date).toLocaleDateString('en-GB').split('/').join('.') // Format date as DD.MM.YYYY
+                        }
+                    )
+                )
+                setAllRatings(formattedRatings)
+            })
+            .catch((error) => console.error("Error fetching data:", error))
+    }
+
     return (
-        <div className={dashboardStyles.lunchGrid}>
-            <LunchCard name="Spaghetti Bolognese" date="2025-02-20" rating={4.3}/>
-            <LunchCard name="Grilled Chicken Salad" date="2025-02-19" rating={3.8}/>
-            <LunchCard name="Vegetable Stir Fry" date="2025-02-18" rating={4.1}/>
-            <LunchCard name="Beef Stroganoff" date="2025-02-17" rating={4.5}/>
+        <div className={ dashboardStyles.lunchGrid }>
+            { allRatings.length == 0 ? (
+                <div>Loading...</div>
+            ) : (
+                allRatings.map((row) => <LunchCard key={ row.date + row.name } name={ row.name } rating={ row.rating }
+                                                   date={ row.date }/>)
+            ) }
         </div>
     )
 }
