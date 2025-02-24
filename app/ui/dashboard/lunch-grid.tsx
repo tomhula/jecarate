@@ -42,7 +42,7 @@ export default function LunchGrid()
             { allRatings.length == 0 ? (
                 <div>Loading...</div>
             ) : (
-                allRatings.map((row) => <LunchCard key={ row.date + row.name } name={ row.name } rating={ row.rating }
+                allRatings.map((row) => <LunchCard key={ row.date + "_" + row.name } name={ row.name } rating={ row.rating }
                                                    date={ row.date }/>)
             ) }
         </div>
