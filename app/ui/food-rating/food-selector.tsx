@@ -105,6 +105,7 @@ export default function FoodSelector()
                 showAlertBubble("success", "Food rating submitted!")
                 setShowForm(false)
                 setSelectedId('')
+                setTimeout(() => window.location.href = "/dashboard", 1000)
             })
             .catch(_ =>
             {
