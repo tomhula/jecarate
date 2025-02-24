@@ -1,8 +1,8 @@
 .foodOption {
     text-align: center;
-    height: 60px;
-    padding: 0 20px;
-    line-height:60px;
+    height: auto;
+    padding: 15px;
+    line-height: auto;
     border: 2px solid #315cfd;
     border-radius: 5px;
     transition: all 0.3s;
@@ -62,8 +62,8 @@
 
 .submitButton {
     position: fixed;
-    bottom: 25px;
-    right: 40px;
+    bottom: 5%;
+    right: 5%;
 
     height: 50px;
     width: 110px;
