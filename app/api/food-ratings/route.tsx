@@ -1,16 +1,18 @@
 import { query } from "@/app/lib/db.server";
 import { NextRequest, NextResponse } from "next/server";
-import { FormAnswer } from "@/app/lib/util";
 
 export async function GET()
 {
     try
     {
-        const [queryResult, _] = await query("SELECT * FROM all_ratings", []);
+        const [queryResult, _] = await query(
+            "SELECT DISTINCT food_name, AVG(rating) as rating, lunch_date FROM all_ratings GROUP BY food_name, lunch_date ORDER BY lunch_date DESC",
+            []);
         return NextResponse.json(queryResult);
     }
     catch (error)
     {
+        console.log(error);
         return NextResponse.json({ message: "Error fetching data" }, { status: 500 });
     }
 }
@@ -20,9 +22,6 @@ export async function POST(req: NextRequest)
     const { foodId, answers } = await req.json();
     if (!foodId || !answers)
         return NextResponse.json({ message: "Invalid request" }, { status: 400 });
-
-    console.log(answers);
-    console.log(foodId);
 
     const answerKeys = Object.keys(answers);
     if (answerKeys.length !== 5 || !answerKeys.every(key => typeof answers[key] === 'number'))

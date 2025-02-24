@@ -27,7 +27,7 @@ export default function LunchGrid()
                     .map((row) => (
                         {
                             name: row.food_name,
-                            rating: row.rating,
+                            rating: parseFloat(row.rating.toFixed(1)),
                             date: new Date(row.lunch_date).toLocaleDateString('en-GB').split('/').join('.') // Format date as DD.MM.YYYY
                         }
                     )
