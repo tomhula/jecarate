@@ -1,22 +1,23 @@
 CREATE TABLE IF NOT EXISTS `user`
 (
-    `id`        int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `user_hash` varchar(255)    NOT NULL
+    `id`        int AUTO_INCREMENT PRIMARY KEY,
+    `user_hash` varchar(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `food`
 (
-    `id`   int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `name` varchar(255)    NOT NULL
+    `id`   int AUTO_INCREMENT PRIMARY KEY,
+    `name` varchar(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `lunch_rating`
 (
-    `id`         int PRIMARY KEY                               NOT NULL AUTO_INCREMENT,
-    `food_id`    int                                           NOT NULL,
-    `rating`     float CHECK (rating >= 0.0 AND rating <= 5.0) NOT NULL,
-    `lunch_date` date                                          NOT NULL,
-    FOREIGN KEY (food_id) REFERENCES food (id)
+    `id`         INT AUTO_INCREMENT PRIMARY KEY,
+    `food_id`    INT NOT NULL,
+    `rating`     FLOAT NOT NULL,
+    `lunch_date` DATE NOT NULL,
+    CONSTRAINT `chk_rating` CHECK (`rating` >= 0.0 AND `rating` <= 5.0),
+    CONSTRAINT `fk_food` FOREIGN KEY (`food_id`) REFERENCES `food` (`id`)
 );
 
 DROP VIEW IF EXISTS `all_ratings`;
