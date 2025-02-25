@@ -1,9 +1,9 @@
 'use client'
 
-import {useEffect, useState} from 'react'
-import {FoodOption} from '@/app/ui/food-rating/food-option'
-import {FoodFormQuestion} from '@/app/ui/food-rating/food-question'
-import {FoodFormQuestionAnswerContainer} from "@/app/ui/food-rating/form-answer-container"
+import { useEffect, useState } from 'react'
+import { FoodOption } from '@/app/ui/food-rating/food-option'
+import { FoodFormQuestion } from '@/app/ui/food-rating/food-question'
+import { FoodFormQuestionAnswerContainer } from "@/app/ui/food-rating/form-answer-container"
 import foodFormStyles from './food-rating.module.css'
 import RatingSlider from "@/app/ui/food-rating/rating-slider"
 import { authorize } from "@/app/index.client"
@@ -14,37 +14,46 @@ import Image from "next/image";
 import LoadingBubbles from "@/app/ui/util/loading-bubbles";
 
 
-export default function FoodSelector() {
+export default function FoodSelector()
+{
     const [showForm, setShowForm] = useState(false)
     const [selectedId, setSelectedId] = useState<string>('')
     const [menuItems, setMenuItems] = useState<MenuItem[] | null>(null) // To store fetched menu items as objects, initially null
 
-    useEffect(() => {
-        if (!authorize()) {
+    useEffect(() =>
+    {
+        if (!authorize())
+        {
             window.location.href = '/login'
             return
         }
 
         fetch('/api/todays-menu')
-            .then(response => {
-                if (!response.ok) {
-                    return {items: []}
+            .then(response =>
+            {
+                if (!response.ok)
+                {
+                    return { items: [] }
                 }
                 return response.json()
             })
-            .then((data: DayMenu) => {
+            .then((data: DayMenu) =>
+            {
                 setMenuItems(data.items) // Assumes the response includes { items: MenuItem[] }
             })
-            .catch(error => {
+            .catch(error =>
+            {
                 console.error("Error fetching menu:", error)
             })
     }, [])
 
-    const handleSelect = (id: string) => {
+    const handleSelect = (id: string) =>
+    {
         setSelectedId(id)
     }
 
-    const handleFoodOptionClick = (id: string) => {
+    const handleFoodOptionClick = (id: string) =>
+    {
         setShowForm(true)
         handleSelect(id)
     }
@@ -57,8 +66,10 @@ export default function FoodSelector() {
         looks: null
     }
 
-    function ratingLabelMap(rating: number) {
-        switch (rating) {
+    function ratingLabelMap(rating: number)
+    {
+        switch (rating)
+        {
             case 0:
                 return "Určitě ne"
             case 1:
@@ -72,7 +83,8 @@ export default function FoodSelector() {
         }
     }
 
-    function postAnswers(answers: FormAnswer) {
+    function postAnswers(answers: FormAnswer)
+    {
         fetch('/api/food-ratings', {
             method: 'POST',
             headers: {
@@ -92,7 +104,8 @@ export default function FoodSelector() {
                 }
                 return response.json()
             })
-            .then(data => {
+            .then(data =>
+            {
                 showAlertBubble("success", "Food rating submitted!")
                 setShowForm(false)
                 setSelectedId('')
@@ -116,20 +129,20 @@ export default function FoodSelector() {
     }
 
     return (
-        <div className={'page-container'}>
-            <div className={foodFormStyles.foodOptions}>
-                {menuItems != null ? (
+        <div className={ 'page-container' }>
+            <div className={ foodFormStyles.foodOptions }>
+                { menuItems != null ? (
                     menuItems.length == 0 ?
                         <div>No menu for today</div>
                         :
                         menuItems.map((item) => (
                             <FoodOption
-                                key={item.number}
-                                id={item.description}
-                                selectedId={selectedId}
-                                onClick={() => handleFoodOptionClick(item.description)}
+                                key={ item.number }
+                                id={ item.description }
+                                selectedId={ selectedId }
+                                onClick={ () => handleFoodOptionClick(item.description) }
                             >
-                                {item.description}
+                                { item.description }
                             </FoodOption>
                         ))
                 ) : (
@@ -137,70 +150,70 @@ export default function FoodSelector() {
                 ) }
             </div>
 
-                {menuItems?.[0]?.soup && (
+            <div>
+                { menuItems?.[0]?.soup && (
                     <FoodOption
                         key="0"
-                        id={menuItems[0].soup}
-                        selectedId={selectedId}
-                        onClick={() => handleFoodOptionClick(menuItems[0].soup)}
+                        id={ menuItems[0].soup }
+                        selectedId={ selectedId }
+                        onClick={ () => handleFoodOptionClick(menuItems[0].soup) }
                     >
-                        {menuItems[0].soup}
+                        { menuItems[0].soup }
                     </FoodOption>
-                )}
+                ) }
             </div>
-            {!showForm && (
-                <div id="message" className={foodFormStyles.message}>
+            { !showForm && (
+                <div id="message" className={ foodFormStyles.message }>
                     Choose a food
                 </div>
-            )
-            }
+            ) }
 
-            {showForm && (
+            { showForm && (
                 <form id="food-form">
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Byla porce uspokojivá?</label>
-                        <RatingSlider labelMap={ratingLabelMap}
-                                      onChange={val => chosenAnswers.ration = val}></RatingSlider>
+                        <label className={ foodFormStyles.questionLabel }>Byla porce uspokojivá?</label>
+                        <RatingSlider labelMap={ ratingLabelMap }
+                                      onChange={ val => chosenAnswers.ration = val }></RatingSlider>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Bylo jídlo chutné?</label>
+                        <label className={ foodFormStyles.questionLabel }>Bylo jídlo chutné?</label>
                         <FoodFormQuestionAnswerContainer>
-                            <RatingSlider labelMap={ratingLabelMap}
-                                          onChange={val => chosenAnswers.taste = val}></RatingSlider>
+                            <RatingSlider labelMap={ ratingLabelMap }
+                                          onChange={ val => chosenAnswers.taste = val }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Byli by jste ochotni, si za toto jídlo
+                        <label className={ foodFormStyles.questionLabel }>Byli by jste ochotni, si za toto jídlo
                             připlatit?</label>
                         <FoodFormQuestionAnswerContainer>
-                            <RatingSlider labelMap={ratingLabelMap}
-                                          onChange={val => chosenAnswers.price = val}></RatingSlider>
+                            <RatingSlider labelMap={ ratingLabelMap }
+                                          onChange={ val => chosenAnswers.price = val }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Mělo jídlo správnou teplotu?</label>
+                        <label className={ foodFormStyles.questionLabel }>Mělo jídlo správnou teplotu?</label>
                         <FoodFormQuestionAnswerContainer>
-                            <RatingSlider labelMap={ratingLabelMap}
-                                          onChange={val => chosenAnswers.temperature = val}></RatingSlider>
+                            <RatingSlider labelMap={ ratingLabelMap }
+                                          onChange={ val => chosenAnswers.temperature = val }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Vypadala prezentace jídla chutně ?</label>
+                        <label className={ foodFormStyles.questionLabel }>Vypadala prezentace jídla chutně ?</label>
                         <FoodFormQuestionAnswerContainer>
-                            <RatingSlider labelMap={ratingLabelMap}
-                                          onChange={val => chosenAnswers.looks = val}></RatingSlider>
+                            <RatingSlider labelMap={ ratingLabelMap }
+                                          onChange={ val => chosenAnswers.looks = val }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
-                    <button type="button" onClick={() => postAnswers(chosenAnswers)}
-                            className={foodFormStyles.submitButton}>Submit
+                    <button type="button" onClick={ () => postAnswers(chosenAnswers) }
+                            className={ foodFormStyles.submitButton }>Submit
                     </button>
                 </form>
-            )}
+            ) }
         </div>
     )
 }
