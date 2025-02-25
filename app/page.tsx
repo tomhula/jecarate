@@ -1,7 +1,7 @@
 'use client'
 
 import { redirect } from 'next/navigation'
-import { authorize } from "@/app/index"
+import { authorize } from "@/app/index.client"
 import { useEffect } from "react"
 import Image from "next/image"
 import styles from "@/app/ui/root.module.css"

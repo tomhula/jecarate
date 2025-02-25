@@ -3,7 +3,7 @@
 import dashboardStyles from './dashboard.module.css'
 import LunchCard from "@/app/ui/dashboard/lunch-card"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { authorize } from "@/app";
+import { authorize } from "@/app/index.client";
 
 export default function LunchGrid()
 {

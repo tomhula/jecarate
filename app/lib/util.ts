@@ -1,4 +1,5 @@
 import path from 'path';
+import { JWTHandler } from "@/app/lib/jwt";
 
 export interface FormAnswer
 {
@@ -10,6 +11,8 @@ export interface FormAnswer
 
     [key: string]: number | null
 }
+
+export const jwtHandler = new JWTHandler()
 
 export function getJecaratePath(cwd: string): string
 {

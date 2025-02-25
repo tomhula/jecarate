@@ -6,10 +6,12 @@ import {FoodFormQuestion} from '@/app/ui/food-rating/food-question'
 import {FoodFormQuestionAnswerContainer} from "@/app/ui/food-rating/form-answer-container"
 import foodFormStyles from './food-rating.module.css'
 import RatingSlider from "@/app/ui/food-rating/rating-slider"
-import {authorize} from "@/app"
-import {FormAnswer} from "@/app/lib/util"
-import {DayMenu, MenuItem} from "@/app/lib/canteen/CanteenMenuParser"
-import {showAlertBubble} from "@/app/ui/util/util"
+import { authorize } from "@/app/index.client"
+import { FormAnswer } from "@/app/lib/util"
+import { DayMenu, MenuItem } from "@/app/lib/canteen/CanteenMenuParser"
+import { showAlertBubble } from "@/app/ui/util/util"
+import Image from "next/image";
+import LoadingBubbles from "@/app/ui/util/loading-bubbles";
 
 
 export default function FoodSelector() {
@@ -78,12 +80,15 @@ export default function FoodSelector() {
             },
             body: JSON.stringify({
                 foodId: selectedId,
-                answers: answers
+                answers: answers,
+                userToken: localStorage.getItem('token')
             })
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Failed to submit food rating")
+            .then(response =>
+            {
+                if (!response.ok)
+                {
+                    showResponseMessage(response)
                 }
                 return response.json()
             })
@@ -93,9 +98,21 @@ export default function FoodSelector() {
                 setSelectedId('')
                 setTimeout(() => window.location.href = "/dashboard", 1000)
             })
-            .catch(_ => {
-                showAlertBubble("error", "Failed to submit food rating")
-            })
+    }
+
+    function showResponseMessage(response: Response)
+    {
+        if (!response.ok)
+        {
+            response.json().then(data =>
+                {
+                    const status = response.status
+                    showAlertBubble("error", data.message)
+                    if (status === 401 || status === 404)
+                        setTimeout(() => window.location.href = "/login", 1000)
+                }
+            )
+        }
     }
 
     return (
@@ -116,8 +133,9 @@ export default function FoodSelector() {
                             </FoodOption>
                         ))
                 ) : (
-                    <div>Loading menu...</div>
-                )}
+                    <LoadingBubbles/>
+                ) }
+            </div>
 
                 {menuItems?.[0]?.soup && (
                     <FoodOption

@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server"
 import { ICanteenWebClient } from "@/app/lib/icanteen-web-client"
-import { JWTHandler } from "@/app/lib/jwt"
-
-const jwtHandler = new JWTHandler()
+import { jwtHandler } from "@/app/lib/util";
 
 export async function GET(req: Request)
 {
