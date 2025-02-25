@@ -69,3 +69,25 @@
     margin: 5px 0;
     color: #555;
 }
+
+.ratingContainer {
+    position: relative;
+    display: inline-block;
+    font-size: 40px; /* Adjust size as needed */
+    line-height: 1; /* Prevents spacing issues */
+}
+
+.stars {
+    display: block;
+    color: lightgray; /* Empty stars color */
+}
+
+.starsFull {
+    color: gold; /* Filled stars color */
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 86.6%; /* Adjust dynamically */
+}
