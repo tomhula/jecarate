@@ -38,8 +38,11 @@ export async function POST(req: NextRequest)
     if (userId.length === 0)
         return NextResponse.json({ message: "User not found" }, { status: 404 });
 
-    // Remove beverage from the foodId
-    const foodDbId = await findFoodIdOrCreate(foodId.split(',').slice(0, -1).join(', ').trim())
+    let foodDbId: number
+    if (foodId.split(',').length > 1)
+        foodDbId = await findFoodIdOrCreate(foodId.split(',').slice(0, -1).join(', ').trim())
+    else
+        foodDbId = await findFoodIdOrCreate(foodId)
     try
     {
         await query(
