@@ -58,11 +58,11 @@ export default function FoodSelector()
     }
 
     const chosenAnswers: FormAnswer = {
-        ration: null,
-        taste: null,
-        price: null,
-        temperature: null,
-        looks: null
+        ration: 0,
+        taste: 0,
+        price: 0,
+        temperature: 0,
+        looks: 0
     }
 
     function ratingLabelMap(rating: number)
