@@ -10,7 +10,6 @@ import { authorize } from "@/app/index.client"
 import { FormAnswer } from "@/app/lib/util"
 import { DayMenu, MenuItem } from "@/app/lib/canteen/CanteenMenuParser"
 import { showAlertBubble } from "@/app/ui/util/util"
-import Image from "next/image";
 import LoadingBubbles from "@/app/ui/util/loading-bubbles";
 
 
@@ -149,14 +148,13 @@ export default function FoodSelector()
                     <LoadingBubbles/>
                 ) }
             </div>
-
             <div>
                 { menuItems?.[0]?.soup && (
                     <FoodOption
-                        key="0"
+                        key={ "soup" }
                         id={ menuItems[0].soup }
                         selectedId={ selectedId }
-                        onClick={ () => handleFoodOptionClick(menuItems[0].soup) }
+                        onClick={ () => { handleFoodOptionClick(menuItems[0].soup) } }
                     >
                         { menuItems[0].soup }
                     </FoodOption>

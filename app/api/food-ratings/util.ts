@@ -12,7 +12,7 @@ export async function findUserOrCreate(username: string): Promise<string>
     return queryResult[0].id;
 }
 
-export async function findFoodIdOrCreate(foodId: string): Promise<string>
+export async function findFoodIdOrCreate(foodId: string): Promise<number>
 {
     const [queryResult, _] = await query("SELECT id FROM food WHERE name = ?", [foodId]) as any[];
     if (queryResult.length === 0)
