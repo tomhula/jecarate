@@ -9,8 +9,11 @@ interface StepSliderProps
 
 export default function StepSlider({labelMap, onChange}: StepSliderProps)
 {
+    const [selected, setSelected] = useState(false);
     const [currentValue, setCurrentValue] = useState(0);
-    const colors = ["#ffcccc", "#ffd9b3", "#cccccc", "#c1f2c1"];
+    const selectedColors = ["#ff6666", "#ff9933", "#fae45b", "#66cc66"];
+    const unselectedColors = ["#ff9999", "#ffcccc", "#ffffcc", "#99ff99"];
+    const colors = selected ? selectedColors : unselectedColors;
     const stepPositions = [0, 33.33, 66.66, 100];
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -21,6 +24,8 @@ export default function StepSlider({labelMap, onChange}: StepSliderProps)
 
     const handleChange = () =>
     {
+        if (!selected)
+            setSelected(true);
         // The timeout is needed, because one input change is triggered after mouseUp
         setTimeout(() =>
         {
@@ -42,7 +47,7 @@ export default function StepSlider({labelMap, onChange}: StepSliderProps)
                     width: "100%",
                     height: "10px",
                     background:
-                        "linear-gradient(to right, #ffcccc 25%, #ffd9b3 25%, #ffd9b3 50%, #cccccc 50%, #cccccc 75%, #c1f2c1 75%)",
+                        `linear-gradient(to right, ${colors[0]} 25%, ${colors[1]} 25%, ${colors[1]} 50%, ${colors[2]} 50%, ${colors[2]} 75%, ${colors[3]} 75%)`,
                     borderRadius: "5px",
                     position: "absolute",
                     top: "50%",
