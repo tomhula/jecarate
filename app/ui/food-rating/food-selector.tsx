@@ -18,6 +18,7 @@ export default function FoodSelector()
     const [showForm, setShowForm] = useState(false)
     const [selectedId, setSelectedId] = useState<string>('')
     const [menuItems, setMenuItems] = useState<MenuItem[] | null>(null) // To store fetched menu items as objects, initially null
+    const [containsDessert, setContainsDessert] = useState(false);
 
     useEffect(() =>
     {
@@ -62,7 +63,8 @@ export default function FoodSelector()
         taste: 0,
         price: 0,
         temperature: 0,
-        looks: 0
+        looks: 0,
+        dessert: 0
     }
 
     function ratingLabelMap(rating: number)
@@ -128,57 +130,83 @@ export default function FoodSelector()
     }
 
     return (
-        <div className={ 'page-container' }>
-            <div className={ foodFormStyles.foodOptions }>
-                { menuItems != null ? (
-                    menuItems.length == 0 ?
-                        <div>No menu for today</div>
-                        :
-                        menuItems.map((item) => (
-                            <FoodOption
-                                key={ item.number }
-                                id={ item.description }
-                                selectedId={ selectedId }
-                                onClick={ () => handleFoodOptionClick(item.description) }
-                            >
-                                { item.description }
-                            </FoodOption>
-                        ))
+        <div className={'page-container'}>
+            {menuItems != null ? (
+                menuItems.length === 0 ? (
+                    <div>No menu for today</div>
                 ) : (
-                    <LoadingBubbles/>
-                ) }
-            </div>
-            <div>
-                { menuItems?.[0]?.soup && (
-                    <FoodOption
-                        key={ "soup" }
-                        id={ menuItems[0].soup }
-                        selectedId={ selectedId }
-                        onClick={ () => { handleFoodOptionClick(menuItems[0].soup) } }
-                    >
-                        { menuItems[0].soup }
-                    </FoodOption>
-                ) }
-            </div>
-            { !showForm && (
-                <div id="message" className={ foodFormStyles.message }>
+                    <div className={foodFormStyles.foodOptionsContainer}>
+                        {/* Meals on the Same Line */}
+                        <div className={foodFormStyles.foodOptions}>
+                            {menuItems.map((item) => (
+                                <FoodOption
+                                    key={item.number}
+                                    id={item.description}
+                                    selectedId={selectedId}
+                                    onClick={() => handleFoodOptionClick(item.description)}
+                                >
+                                    {item.description}
+                                </FoodOption>
+                            ))}
+                        </div>
+
+                        {/* Separation Line */}
+                        <div className={foodFormStyles.separatorLine}></div>
+
+                        {/* Soup Below the Line */}
+                        {menuItems?.[0]?.soup && (
+                            <div className={foodFormStyles.soupContainer}>
+                                <FoodOption
+                                    key={"soup"}
+                                    id={menuItems[0].soup}
+                                    selectedId={selectedId}
+                                    onClick={() => handleFoodOptionClick(menuItems[0].soup)}
+                                >
+                                    {menuItems[0].soup}
+                                </FoodOption>
+                            </div>
+                        )}
+                    </div>
+                )
+            ) : (
+                <LoadingBubbles />
+            )}
+            {/* Separation Line */}
+            <div className={foodFormStyles.separatorLine}></div>
+
+            {!showForm && (
+                <div id="message" className={foodFormStyles.message}>
                     Choose a food
                 </div>
-            ) }
-
-            { showForm && (
+            )}
+            {showForm && (
                 <form id="food-form">
+                    {!containsDessert && (
+                        <FoodFormQuestion>
+                        <label className={foodFormStyles.dessertCheckboxContainer}>
+                            Měl oběd také dezert?
+                            <input
+                                className={foodFormStyles.dessertCheckbox}
+                                type="checkbox"
+                                checked={containsDessert}
+                                onChange={() => setContainsDessert(!containsDessert)}
+                            />
+                            <span className={foodFormStyles.customCheckbox}></span>
+                        </label>
+                        </FoodFormQuestion>
+                        )}
+
                     <FoodFormQuestion>
-                        <label className={ foodFormStyles.questionLabel }>Byla porce uspokojivá?</label>
-                        <RatingSlider labelMap={ ratingLabelMap }
-                                      onChange={ val => chosenAnswers.ration = val }></RatingSlider>
+                        <label className={foodFormStyles.questionLabel}>Byla porce uspokojivá?</label>
+                        <RatingSlider labelMap={ratingLabelMap}
+                                      onChange={val => chosenAnswers.ration = val}></RatingSlider>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label className={ foodFormStyles.questionLabel }>Bylo jídlo chutné?</label>
+                        <label className={foodFormStyles.questionLabel}>Bylo jídlo chutné?</label>
                         <FoodFormQuestionAnswerContainer>
-                            <RatingSlider labelMap={ ratingLabelMap }
-                                          onChange={ val => chosenAnswers.taste = val }></RatingSlider>
+                            <RatingSlider labelMap={ratingLabelMap}
+                                          onChange={val => chosenAnswers.taste = val}></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
@@ -206,6 +234,16 @@ export default function FoodSelector()
                                           onChange={ val => chosenAnswers.looks = val }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
+
+                    {containsDessert && (
+                    <FoodFormQuestion>
+                        <label className={foodFormStyles.questionLabel}>Byl dezert také chutný?</label>
+                        <FoodFormQuestionAnswerContainer>
+                            <RatingSlider labelMap={ ratingLabelMap }
+                                          onChange={ val => chosenAnswers.dessert = val }></RatingSlider>
+                        </FoodFormQuestionAnswerContainer>
+                    </FoodFormQuestion>
+                    )}
 
                     <button type="button" onClick={ () => postAnswers(chosenAnswers) }
                             className={ foodFormStyles.submitButton }>Submit
