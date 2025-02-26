@@ -2,13 +2,6 @@
 
 import styles from './food-rating.module.css';
 
-/*
-* Přidání polévky možnosti:
-* - nová třída SoupOption
-* - nový parametr v FoodOption
-* - pevné přidání FoodOption přímo do FoodSelector
-* */
-
 export function FoodOption(props: {
     children: string;
     id: string;

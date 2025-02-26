@@ -11,7 +11,6 @@ export default function StepSlider({labelMap, onChange}: StepSliderProps)
 {
     const [currentValue, setCurrentValue] = useState(0);
     const colors = ["#ffcccc", "#ffd9b3", "#cccccc", "#c1f2c1"];
-    const vibrantColours = ["red", "orange", "gray", "green"]
     const stepPositions = [0, 33.33, 66.66, 100];
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -31,24 +30,23 @@ export default function StepSlider({labelMap, onChange}: StepSliderProps)
         }, 10);
     };
 
-    // On input change the colours
-    const trackGradient = colors
-        .map((color, index) => {
-            const activeColor = vibrantColours[index];
-            const isActive = currentValue >= index;
-            return `${isActive ? activeColor : color} ${stepPositions[index]}%`;
-        })
-        .join(", ");
+    const currentColor = colors[Math.round(currentValue)];
     const sliderPosition = stepPositions[Math.round(currentValue)];
 
     return (
-        <div className={foodFormStyles.ratingSlider}>
+        <div className={foodFormStyles.ratingSlider} style={{position: "relative", width: "320px", textAlign: "center"}}>
             {/* Background Track */}
             <div
-                className={foodFormStyles.sliderTrack}
+                className="slider-track"
                 style={{
-                    background: `linear-gradient(to right, ${trackGradient})`,
-                    transition: "background 0.3s ease",
+                    width: "100%",
+                    height: "10px",
+                    background:
+                        "linear-gradient(to right, #ffcccc 25%, #ffd9b3 25%, #ffd9b3 50%, #cccccc 50%, #cccccc 75%, #c1f2c1 75%)",
+                    borderRadius: "5px",
+                    position: "absolute",
+                    top: "50%",
+                    transform: "translateY(-50%)",
                 }}
             ></div>
 
@@ -68,7 +66,7 @@ export default function StepSlider({labelMap, onChange}: StepSliderProps)
                     position: "relative",
                     zIndex: 2,
                     marginTop: "4px",
-                    "--thumb-color": vibrantColours[Math.round(currentValue)],
+                    "--thumb-color": currentColor,
                 } as React.CSSProperties}
             />
 
@@ -105,7 +103,7 @@ export default function StepSlider({labelMap, onChange}: StepSliderProps)
                     left: `${sliderPosition}%`,
                     width: "100px",
                     fontSize: "18px",
-                    color: vibrantColours[Math.round(currentValue)],
+                    color: currentColor,
                     fontWeight: "bold",
                     transform: "translateX(-50%)",
                     transition: "left 0.3s ease, color 0.3s ease",

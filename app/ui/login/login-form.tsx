@@ -11,15 +11,10 @@ interface LoginFormProps
 
 export default function LoginForm({postUrl}: LoginFormProps)
 {
-
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        await authenticate(postUrl);
-    };
     return (
         <div className={`flex min-h-screen items-center justify-center px-6 bg-gray-100`}>
             {/* Blur Overlay */}
-            <form  className="w-full max-w-lg rounded-xl bg-white p-16 shadow-1xl" onSubmit={handleSubmit}>
+            <form  className="w-full max-w-lg rounded-xl bg-white p-16 shadow-1xl">
                 {/* Title */}
                 <h1 className="mb-10 text-center text-4xl font-bold text-gray-900">
                     Login
@@ -39,7 +34,7 @@ export default function LoginForm({postUrl}: LoginFormProps)
                     {/* Sign In Button */}
                     <button
                         className="w-full rounded-xl bg-blue-500 py-4 text-xl font-bold text-white transition hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                        type="submit"
+                        type="button"
                         onClick={() => authenticate(postUrl)}
                     >
                         SIGN IN
