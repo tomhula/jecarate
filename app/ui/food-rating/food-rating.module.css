@@ -44,10 +44,11 @@
 }
 
 .separatorLine {
-    width: 100%;
-    height: 1px;
+    width: 70%;
+    min-width: 400px;
+    height: 3px;
     background-color: rgba(0, 0, 0, 0.2);
-    margin: 15px 0;
+    margin: 20px 15% 20px 15%;
 }
 
 /* Dessert Checkbox */
@@ -91,9 +92,8 @@
     content: '✔';
     color: white;
     position: absolute;
-    left: 5px;
-    top: 1px;
-    font-size: 16px;
+    left: 4px;
+    font-size: 15px;
     font-weight: bold;
 }
 

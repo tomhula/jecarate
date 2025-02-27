@@ -131,6 +131,22 @@ export default function FoodSelector()
 
     return (
         <div className={'page-container'}>
+            {/* Soup Below the Line */}
+            {menuItems?.[0]?.soup && (
+                <div className={foodFormStyles.soupContainer}>
+                    <FoodOption
+                        key={"soup"}
+                        id={menuItems[0].soup}
+                        selectedId={selectedId}
+                        onClick={() => handleFoodOptionClick(menuItems[0].soup)}
+                    >
+                        {menuItems[0].soup}
+                    </FoodOption>
+                </div>
+            )}
+            {/* Separation Line */}
+            <div className={foodFormStyles.separatorLine}></div>
+
             {menuItems != null ? (
                 menuItems.length === 0 ? (
                     <div>No menu for today</div>
@@ -149,30 +165,11 @@ export default function FoodSelector()
                                 </FoodOption>
                             ))}
                         </div>
-
-                        {/* Separation Line */}
-                        <div className={foodFormStyles.separatorLine}></div>
-
-                        {/* Soup Below the Line */}
-                        {menuItems?.[0]?.soup && (
-                            <div className={foodFormStyles.soupContainer}>
-                                <FoodOption
-                                    key={"soup"}
-                                    id={menuItems[0].soup}
-                                    selectedId={selectedId}
-                                    onClick={() => handleFoodOptionClick(menuItems[0].soup)}
-                                >
-                                    {menuItems[0].soup}
-                                </FoodOption>
-                            </div>
-                        )}
                     </div>
                 )
             ) : (
                 <LoadingBubbles />
             )}
-            {/* Separation Line */}
-            <div className={foodFormStyles.separatorLine}></div>
 
             {!showForm && (
                 <div id="message" className={foodFormStyles.message}>
@@ -181,7 +178,8 @@ export default function FoodSelector()
             )}
             {showForm && (
                 <form id="food-form">
-                    {!containsDessert && (
+
+                    {(selectedId!=menuItems?.[0]?.soup) && (
                         <FoodFormQuestion>
                         <label className={foodFormStyles.dessertCheckboxContainer}>
                             Měl oběd také dezert?
@@ -194,7 +192,7 @@ export default function FoodSelector()
                             <span className={foodFormStyles.customCheckbox}></span>
                         </label>
                         </FoodFormQuestion>
-                        )}
+                    )}
 
                     <FoodFormQuestion>
                         <label className={foodFormStyles.questionLabel}>Byla porce uspokojivá?</label>
