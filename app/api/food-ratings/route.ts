@@ -26,7 +26,7 @@ export async function POST(req: NextRequest)
         return NextResponse.json({ message: "Invalid request" }, { status: 400 });
 
     const answerKeys = Object.keys(answers);
-    if (answerKeys.length !== 5 || !answerKeys.every(key => typeof answers[key] === 'number'))
+    if (answerKeys.length !== 6 || !answerKeys.every(key => typeof answers[key] === 'number'))
         return NextResponse.json({ message: "Invalid answers" }, { status: 400 });
 
     const jwtParsed = jwtHandler.verifyJWT(userToken)
@@ -45,10 +45,16 @@ export async function POST(req: NextRequest)
         foodDbId = await findFoodIdOrCreate(foodId)
     try
     {
-        await query(
-            "INSERT INTO lunch_rating (food_id, user_id, ration, taste, price, temperature, looks, lunch_date) VALUES (?, ?, ?, ?, ?, ?, ?, CURDATE())",
-            [foodDbId, userId, answers.ration, answers.taste, answers.price, answers.temperature, answers.looks]
-        );
+        if (answers.desert === -1)
+            await query(
+                "INSERT INTO lunch_rating (food_id, user_id, ration, taste, price, temperature, looks, lunch_date) VALUES (?, ?, ?, ?, ?, ?, ?, CURDATE())",
+                [foodDbId, userId, answers.ration, answers.taste, answers.price, answers.temperature, answers.looks]
+            );
+        else
+            await query(
+                "INSERT INTO lunch_rating (food_id, user_id, ration, taste, price, temperature, looks, desert, lunch_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURDATE())",
+                [foodDbId, userId, answers.ration, answers.taste, answers.price, answers.temperature, answers.looks, answers.desert]
+            );
         return NextResponse.json({ message: "Rating submitted successfully" });
     }
     catch (error)

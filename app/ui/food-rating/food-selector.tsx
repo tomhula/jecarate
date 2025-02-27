@@ -64,7 +64,7 @@ export default function FoodSelector()
         price: 0,
         temperature: 0,
         looks: 0,
-        dessert: 0
+        desert: -1
     }
 
     function ratingLabelMap(rating: number)
@@ -112,6 +112,12 @@ export default function FoodSelector()
                 setSelectedId('')
                 setTimeout(() => window.location.href = "/dashboard", 1000)
             })
+    }
+
+    function handleDessertChange()
+    {
+        setContainsDessert(!containsDessert)
+        chosenAnswers.desert = containsDessert ? 0 : -1
     }
 
     function showResponseMessage(response: Response)
@@ -187,7 +193,7 @@ export default function FoodSelector()
                                 className={foodFormStyles.dessertCheckbox}
                                 type="checkbox"
                                 checked={containsDessert}
-                                onChange={() => setContainsDessert(!containsDessert)}
+                                onChange={() => handleDessertChange()}
                             />
                             <span className={foodFormStyles.customCheckbox}></span>
                         </label>

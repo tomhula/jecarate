@@ -8,6 +8,7 @@ export interface FormAnswer
     price: number | null,
     temperature: number | null,
     looks: number | null,
+    desert: number | null
 
     [key: string]: number | null
 }
