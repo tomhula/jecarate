@@ -22,11 +22,14 @@ export async function GET()
 export async function POST(req: NextRequest)
 {
     const { foodId, answers, userToken } = await req.json();
+
+    console.log(answers)
+
     if (!foodId || !answers)
         return NextResponse.json({ message: "Invalid request" }, { status: 400 });
 
     const answerKeys = Object.keys(answers);
-    if (answerKeys.length !== 6 || !answerKeys.every(key => typeof answers[key] === 'number'))
+    if (answerKeys.length !== 7 || !answerKeys.every(key => typeof answers[key] === 'number'))
         return NextResponse.json({ message: "Invalid answers" }, { status: 400 });
 
     const jwtParsed = jwtHandler.verifyJWT(userToken)
@@ -40,9 +43,9 @@ export async function POST(req: NextRequest)
 
     let foodDbId: number
     if (foodId.split(',').length > 1)
-        foodDbId = await findFoodIdOrCreate(foodId.split(',').slice(0, -1).join(', ').trim())
+        foodDbId = await findFoodIdOrCreate(foodId.split(',').slice(0, -1).join(', ').trim(), answers.isSoup)
     else
-        foodDbId = await findFoodIdOrCreate(foodId)
+        foodDbId = await findFoodIdOrCreate(foodId, answers.isSoup)
     try
     {
         if (answers.desert === -1)

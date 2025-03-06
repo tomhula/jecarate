@@ -18,6 +18,8 @@ export default function FoodSelector()
     const [showForm, setShowForm] = useState(false)
     const [selectedId, setSelectedId] = useState<string>('')
     const [menuItems, setMenuItems] = useState<MenuItem[] | null>(null) // To store fetched menu items as objects, initially null
+    const [hasRatedSoup, setHasRatedSoup] = useState(false)
+    const [hasRatedMeal, setHasRatedMeal] = useState(false)
     const [containsDessert, setContainsDessert] = useState(false);
 
     useEffect(() =>
@@ -28,18 +30,26 @@ export default function FoodSelector()
             return
         }
 
-        fetch('/api/todays-menu')
-            .then(response =>
+        fetch('/api/todays-menu', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${ localStorage.getItem('token') || '' }`,
+                'Content-Type': 'application/json'
+            }
+        }).then(response =>
+        {
+            if (!response.ok)
             {
-                if (!response.ok)
-                {
-                    return { items: [] }
-                }
-                return response.json()
-            })
-            .then((data: DayMenu) =>
+                return { items: [], hasRatedSoup: false, hasRatedMeal: false }
+            }
+            return response.json()
+        })
+            .then((response: any) =>
             {
-                setMenuItems(data.items) // Assumes the response includes { items: MenuItem[] }
+                setMenuItems(response.todayMenu.items)// Assumes the response includes { items: MenuItem[] }
+                setHasRatedMeal(response.hasRatedMeal)
+                setHasRatedSoup(response.hasRatedSoup)
+                console.log(response)
             })
             .catch(error =>
             {
@@ -52,20 +62,26 @@ export default function FoodSelector()
         setSelectedId(id)
     }
 
-    const handleFoodOptionClick = (id: string) =>
-    {
-        setShowForm(true)
-        handleSelect(id)
-    }
-
-    const chosenAnswers: FormAnswer = {
+    const [chosenAnswers, setChosenAnswers] = useState<FormAnswer>({
         ration: 0,
         taste: 0,
         price: 0,
         temperature: 0,
         looks: 0,
-        desert: -1
-    }
+        desert: -1,
+        isSoup: 0
+    });
+
+    const handleFoodOptionClick = (id: string, isSoup: boolean) =>
+    {
+        setChosenAnswers(prev => ({
+            ...prev,
+            isSoup: isSoup ? 1 : 0
+        }));
+
+        setShowForm(true);
+        handleSelect(id);
+    };
 
     function ratingLabelMap(rating: number)
     {
@@ -136,81 +152,87 @@ export default function FoodSelector()
     }
 
     return (
-        <div className={'page-container'}>
-            {/* Soup Below the Line */}
-            {menuItems?.[0]?.soup && (
-                <div className={foodFormStyles.soupContainer}>
+        <div className={ 'page-container' }>
+            {/* Soup Below the Line */ }
+            { !hasRatedSoup && menuItems?.[0]?.soup && (
+                <div className={ foodFormStyles.soupContainer }>
                     <FoodOption
-                        key={"soup"}
-                        id={menuItems[0].soup}
-                        selectedId={selectedId}
-                        onClick={() => handleFoodOptionClick(menuItems[0].soup)}
+                        key={ "soup" }
+                        id={ menuItems[0].soup }
+                        selectedId={ selectedId }
+                        onClick={ () => handleFoodOptionClick(menuItems[0].soup, true) }
                     >
-                        {menuItems[0].soup}
+                        { menuItems[0].soup }
                     </FoodOption>
                 </div>
-            )}
-            {/* Separation Line */}
-            <div className={foodFormStyles.separatorLine}></div>
+            ) }
+            {/* Separation Line */ }
+            <div className={ foodFormStyles.separatorLine }></div>
 
-            {menuItems != null ? (
+            { menuItems != null ? (
                 menuItems.length === 0 ? (
-                    <div>No menu for today</div>
+                    <div className={ foodFormStyles.message }>No menu for today</div>
                 ) : (
-                    <div className={foodFormStyles.foodOptionsContainer}>
-                        {/* Meals on the Same Line */}
-                        <div className={foodFormStyles.foodOptions}>
-                            {menuItems.map((item) => (
+                    !hasRatedMeal ? (
+                        <div className={ foodFormStyles.foodOptionsContainer }>
+                        {/* Meals on the Same Line */ }
+                        <div className={ foodFormStyles.foodOptions }>
+                            { menuItems.map((item) => (
                                 <FoodOption
-                                    key={item.number}
-                                    id={item.description}
-                                    selectedId={selectedId}
-                                    onClick={() => handleFoodOptionClick(item.description)}
+                                    key={ item.number }
+                                    id={ item.description }
+                                    selectedId={ selectedId }
+                                    onClick={ () => handleFoodOptionClick(item.description, false) }
                                 >
-                                    {item.description}
+                                    { item.description }
                                 </FoodOption>
-                            ))}
+                            )) }
                         </div>
-                    </div>
+                        </div>
+                    ) : (
+                        <div className={ foodFormStyles.message }>
+                            You have already rated today's meal
+                        </div>
+                    )
                 )
             ) : (
-                <LoadingBubbles />
-            )}
+                <LoadingBubbles/>
+            ) }
 
-            {!showForm && (
-                <div id="message" className={foodFormStyles.message}>
+            { !showForm && (
+                <div id="message" className={ foodFormStyles.message }>
                     Choose a food
                 </div>
-            )}
-            {showForm && (
+            ) }
+            { showForm && (
                 <form id="food-form">
 
-                    {(selectedId!=menuItems?.[0]?.soup) && (
+                    { (selectedId != menuItems?.[0]?.soup) && (
                         <FoodFormQuestion>
-                        <label className={foodFormStyles.dessertCheckboxContainer}>
-                            Měl oběd také dezert?
-                            <input
-                                className={foodFormStyles.dessertCheckbox}
-                                type="checkbox"
-                                checked={containsDessert}
-                                onChange={() => handleDessertChange()}
-                            />
-                            <span className={foodFormStyles.customCheckbox}></span>
-                        </label>
+                            <label className={ foodFormStyles.dessertCheckboxContainer }>
+                                Měl oběd také dezert?
+                                <input
+                                    className={ foodFormStyles.dessertCheckbox }
+                                    type="checkbox"
+                                    checked={ containsDessert }
+                                    onChange={ () => handleDessertChange() }
+                                />
+                                <span className={ foodFormStyles.customCheckbox }></span>
+                            </label>
                         </FoodFormQuestion>
-                    )}
+                    ) }
 
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Byla porce uspokojivá?</label>
-                        <RatingSlider labelMap={ratingLabelMap}
-                                      onChange={val => chosenAnswers.ration = val}></RatingSlider>
+                        <label className={ foodFormStyles.questionLabel }>Byla porce uspokojivá?</label>
+                        <RatingSlider labelMap={ ratingLabelMap }
+                                      onChange={ val => chosenAnswers.ration = val }></RatingSlider>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Bylo jídlo chutné?</label>
+                        <label className={ foodFormStyles.questionLabel }>Bylo jídlo chutné?</label>
                         <FoodFormQuestionAnswerContainer>
-                            <RatingSlider labelMap={ratingLabelMap}
-                                          onChange={val => chosenAnswers.taste = val}></RatingSlider>
+                            <RatingSlider labelMap={ ratingLabelMap }
+                                          onChange={ val => chosenAnswers.taste = val }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
@@ -239,15 +261,15 @@ export default function FoodSelector()
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
-                    {containsDessert && (
-                    <FoodFormQuestion>
-                        <label className={foodFormStyles.questionLabel}>Byl dezert také chutný?</label>
-                        <FoodFormQuestionAnswerContainer>
-                            <RatingSlider labelMap={ ratingLabelMap }
-                                          onChange={ val => chosenAnswers.dessert = val }></RatingSlider>
-                        </FoodFormQuestionAnswerContainer>
-                    </FoodFormQuestion>
-                    )}
+                    { containsDessert && (
+                        <FoodFormQuestion>
+                            <label className={ foodFormStyles.questionLabel }>Byl dezert také chutný?</label>
+                            <FoodFormQuestionAnswerContainer>
+                                <RatingSlider labelMap={ ratingLabelMap }
+                                              onChange={ val => chosenAnswers.desert = val }></RatingSlider>
+                            </FoodFormQuestionAnswerContainer>
+                        </FoodFormQuestion>
+                    ) }
 
                     <button type="button" onClick={ () => postAnswers(chosenAnswers) }
                             className={ foodFormStyles.submitButton }>Submit
