@@ -14,7 +14,7 @@ export default function LunchCard({name, date, rating}: LunchCardProps)
     return (
         <div className={styles.lunchCard}>
             <h3 className={styles.lunchCardName}>{name}</h3>
-            <div className={styles.lunchCardFieldName}>Datum: <p>{date}</p></div>
+            <div className={styles.lunchCardFieldName}>Datum: <p>{new Date(date).toLocaleDateString()}</p></div>
             <div className={styles.lunchCardFieldName}>Hodnocení: <p>{rating}</p></div>
             <div className={styles.ratingContainer}>
                 <div className={styles.stars}>★★★</div>
