@@ -271,9 +271,11 @@ export default function FoodSelector()
                         </FoodFormQuestion>
                     ) }
 
-                    <button type="button" onClick={ () => postAnswers(chosenAnswers) }
-                            className={ foodFormStyles.submitButton }>Submit
-                    </button>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <button type="button" onClick={() => postAnswers(chosenAnswers)}
+                                className={foodFormStyles.submitButton}>Submit
+                        </button>
+                    </div>
                 </form>
             ) }
         </div>
