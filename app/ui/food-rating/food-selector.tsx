@@ -123,7 +123,7 @@ export default function FoodSelector()
             })
             .then(data =>
             {
-                showAlertBubble("success", "Food rating submitted!")
+                showAlertBubble("success", "Hodnocení odesláno!")
                 setShowForm(false)
                 setSelectedId('')
                 setTimeout(() => window.location.href = "/dashboard", 1000)
@@ -191,7 +191,7 @@ export default function FoodSelector()
                         </div>
                     ) : (
                         <div className={ foodFormStyles.message }>
-                            You have already rated today's meal
+                            Již jste ohodnotili dnešní oběd
                         </div>
                     )
                 )
@@ -201,7 +201,7 @@ export default function FoodSelector()
 
             { !showForm && (
                 <div id="message" className={ foodFormStyles.message }>
-                    Choose a food
+                    Zvolte oběd
                 </div>
             ) }
             { showForm && (
@@ -273,7 +273,7 @@ export default function FoodSelector()
 
                     <div style={{display: 'flex', justifyContent: 'center'}}>
                         <button type="button" onClick={() => postAnswers(chosenAnswers)}
-                                className={foodFormStyles.submitButton}>Submit
+                                className={foodFormStyles.submitButton}>Odeslat
                         </button>
                     </div>
                 </form>

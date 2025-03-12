@@ -22,17 +22,17 @@ export default function LoginForm({postUrl}: LoginFormProps)
             <form  className="w-full max-w-lg rounded-xl bg-white p-16 shadow-1xl" onSubmit={handleSubmit}>
                 {/* Title */}
                 <h1 className="mb-10 text-center text-4xl font-bold text-gray-900">
-                    Login
+                    Přihlášení
                 </h1>
                 <div className="space-y-8">
                     {/* Email Input */}
                     <div>
-                        <InputField type="text" placeholder="Enter your email" required minLength={0} name="text"/>
+                        <InputField type="text" placeholder="Uživatelské jméno" required minLength={0} name="text"/>
                     </div>
 
                     {/* Password Input */}
                     <div>
-                        <InputField type="password" placeholder="Enter your password" required minLength={6}
+                        <InputField type="password" placeholder="Heslo" required minLength={6}
                                     name="password"/>
                     </div>
 
@@ -42,7 +42,7 @@ export default function LoginForm({postUrl}: LoginFormProps)
                         type="submit"
                         onClick={() => authenticate(postUrl)}
                     >
-                        SIGN IN
+                        PŘIHLÁSIT
                     </button>
                 </div>
             </form>
@@ -55,7 +55,7 @@ async function authenticate(postUrl: string)
     const username = (document.querySelector('input[name="text"]') as HTMLInputElement).value
     const password = (document.querySelector('input[name="password"]') as HTMLInputElement).value
 
-    const bubble = showAlertBubble("info", "Logging in...")
+    const bubble = showAlertBubble("info", "Přihlašování...")
     const response = await fetch(postUrl, {
             method: 'POST',
             headers: {
@@ -69,11 +69,11 @@ async function authenticate(postUrl: string)
 
     if (!response.ok)
     {
-        showAlertBubble("error", "Invalid email or password")
+        showAlertBubble("error", "Nesprávný email nebo heslo")
         return
     }
 
-    showAlertBubble("success", "Successfully logged in")
+    showAlertBubble("success", "Úspěšně přihlášen")
 
     const {token} = await response.json()
     localStorage.setItem('token', token)
