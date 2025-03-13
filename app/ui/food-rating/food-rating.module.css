@@ -45,7 +45,6 @@
 
 .separatorLine {
     width: 70%;
-    min-width: 400px;
     height: 3px;
     background-color: rgba(0, 0, 0, 0.2);
     margin: 20px 15% 20px 15%;
