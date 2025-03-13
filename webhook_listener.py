@@ -63,7 +63,7 @@ class WebhookHandler(BaseHTTPRequestHandler):
 
             print("Starting new deployment...")
             current_process = subprocess.Popen(
-                ["sh", "-c", "../deploy.sh"],
+                ["sh", "-c", "sudo ../deploy.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE
             )
