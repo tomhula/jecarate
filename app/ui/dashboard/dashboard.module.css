@@ -1,0 +1,164 @@
+.dashboardHeader {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.rateButton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.rateButton:hover {
+    background-color: #218838;
+}
+
+.searchContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.searchContainer input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.lunchGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.lunchCard {
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.lunchCard:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.lunchCardName {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.lunchCardFieldName {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.lunchCard p {
+    display: inline;
+    margin: 5px 0;
+    color: #555;
+}
+
+.ratingContainer {
+    position: relative;
+    display: inline-block;
+    font-size: 40px;
+    line-height: 1;
+}
+
+.stars {
+    display: block;
+    color: lightgray;
+}
+
+.starsFull {
+    color: gold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 86.6%;
+}
+
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popupCard {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 500px;
+    max-width: 600px;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.popupCard h2 {
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.popupCard p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.popupCard button {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.popupCard button:hover {
+    background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

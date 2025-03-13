@@ -1,0 +1,33 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3002:3000"
+    environment:
+      DB_HOST: mysql
+      DB_NAME: jecarate
+      DB_USER: jecarateuser
+      DB_PASSWORD: jecarateuserpassword
+      DB_PORT: 3306
+    depends_on:
+      mysql:
+        condition: service_healthy
+        restart: true
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+      MYSQL_DATABASE: jecarate
+      MYSQL_USER: jecarateuser
+      MYSQL_PASSWORD: jecarateuserpassword
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
