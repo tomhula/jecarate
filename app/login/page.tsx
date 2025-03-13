@@ -9,7 +9,7 @@ export default function Page()
     useEffect(() =>
     {
         if (document.referrer.includes("/food-rating") || document.referrer.includes("/dashboard"))
-            showAlertBubble("error", "Pro tunto stránku musíte být přihlášen.");
+            showAlertBubble("error", "Pro tuto stránku musíte být přihlášen.");
     }, []
     );
 
