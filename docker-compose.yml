@@ -1,25 +1,24 @@
 services:
-  nextjs:
+  app:
     build: .
     ports:
-      - "2000:3000"
+      - "3002:3000"
     environment:
-      DB_HOST: db
-      DB_USER: root
-      DB_PASSWORD: example
-      DB_NAME: mydatabase
+      DB_HOST: mysql
+      DB_NAME: jecarate
+      DB_USER: jecarateuser
+      DB_PASSWORD: jecarateuserpassword
       DB_PORT: 3306
     depends_on:
-      - db
+      - mysql
 
-  db:
+  mysql:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: jecarate
+      MYSQL_USER: jecarateuser
+      MYSQL_PASSWORD: jecarateuserpassword
     volumes:
       - mysql_data:/var/lib/mysql
 

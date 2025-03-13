@@ -63,7 +63,7 @@ class WebhookHandler(BaseHTTPRequestHandler):
 
             print("Starting new deployment...")
             current_process = subprocess.Popen(
-                ["sh", "-c", "git pull origin dev && docker compose up --build -d"],
+                ["sh", "-c", "../deploy.sh"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE
             )
@@ -72,7 +72,7 @@ class WebhookHandler(BaseHTTPRequestHandler):
             print(f"Deployment finished:\n{stdout.decode()}\n{stderr.decode()}")
 
 if __name__ == "__main__":
-    server_address = ('0.0.0.0', 2001)
+    server_address = ('0.0.0.0', 2000)
     httpd = HTTPServer(server_address, WebhookHandler)
     print("Listening for GitHub webhooks on port 2001...")
     httpd.serve_forever()
