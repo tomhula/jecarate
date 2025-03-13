@@ -26,7 +26,7 @@ export default function StepSlider({labelMap, onChange}: StepSliderProps)
     {
         if (!selected)
             setSelected(true);
-        // The timeout is needed, because one input change is triggered after mouseUp
+        // The timeout is needed, because one input change is triggered after mouseUp or touchEnd
         setTimeout(() =>
         {
             const roundedValue = Math.round(currentValue);
@@ -64,6 +64,7 @@ export default function StepSlider({labelMap, onChange}: StepSliderProps)
                 value={currentValue}
                 onInput={handleInput}
                 onMouseUp={handleChange}
+                onTouchEnd={handleChange}
                 style={{
                     width: "100%",
                     appearance: "none",
