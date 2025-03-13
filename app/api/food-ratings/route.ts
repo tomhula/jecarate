@@ -3,24 +3,32 @@ import { NextRequest, NextResponse } from "next/server";
 import { jwtHandler } from "@/app/lib/util";
 import { findFoodIdOrCreate, findUserOrCreate } from "@/app/api/food-ratings/util";
 
-export async function GET()
-{
-    try
-    {
+export async function GET() {
+    try {
         const [queryResult, _] = await query(
-            "SELECT DISTINCT food_name, AVG(rating) as rating, lunch_date FROM all_ratings GROUP BY food_name, lunch_date ORDER BY lunch_date DESC",
-            []);
+            `SELECT DISTINCT
+                food_name, 
+                AVG(rating) as rating, 
+                AVG(ration) as ration, 
+                AVG(taste) as taste, 
+                AVG(price) as price, 
+                AVG(temperature) as temperature, 
+                AVG(looks) as looks, 
+                lunch_date
+            FROM all_ratings 
+            GROUP BY food_name, lunch_date
+            ORDER BY lunch_date DESC`,
+            []
+        );
+
         return NextResponse.json(queryResult);
-    }
-    catch (error)
-    {
+    } catch (error) {
         console.log(error);
         return NextResponse.json({ message: "Error fetching data" }, { status: 500 });
     }
 }
 
-export async function POST(req: NextRequest)
-{
+export async function POST(req: NextRequest) {
     const { foodId, answers, userToken } = await req.json();
 
     console.log(answers)
@@ -46,8 +54,7 @@ export async function POST(req: NextRequest)
         foodDbId = await findFoodIdOrCreate(foodId.split(',').slice(0, -1).join(', ').trim(), answers.isSoup)
     else
         foodDbId = await findFoodIdOrCreate(foodId, answers.isSoup)
-    try
-    {
+    try {
         if (answers.desert === -1)
             await query(
                 "INSERT INTO lunch_rating (food_id, user_id, ration, taste, price, temperature, looks, lunch_date) VALUES (?, ?, ?, ?, ?, ?, ?, CURDATE())",
@@ -60,8 +67,7 @@ export async function POST(req: NextRequest)
             );
         return NextResponse.json({ message: "Rating submitted successfully" });
     }
-    catch (error)
-    {
+    catch (error) {
         return NextResponse.json({ message: "Error saving rating" }, { status: 500 });
     }
 }
