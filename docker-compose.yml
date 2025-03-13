@@ -10,7 +10,7 @@ services:
       DB_PASSWORD: jecarateuserpassword
       DB_PORT: 3306
     depends_on:
-      db:
+      mysql:
         condition: service_healthy
         restart: true
 
