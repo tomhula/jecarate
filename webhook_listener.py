@@ -74,5 +74,5 @@ class WebhookHandler(BaseHTTPRequestHandler):
 if __name__ == "__main__":
     server_address = ('0.0.0.0', 2000)
     httpd = HTTPServer(server_address, WebhookHandler)
-    print("Listening for GitHub webhooks on port 2001...")
+    print("Listening for GitHub webhooks on port 2000...")
     httpd.serve_forever()
