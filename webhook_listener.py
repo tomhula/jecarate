@@ -31,7 +31,7 @@ class WebhookHandler(BaseHTTPRequestHandler):
         data = json.loads(payload)
 
         # Check if this is a push to the 'dev' branch
-        if data.get("ref") == "refs/heads/dev":
+        if data.get("ref") == "refs/heads/main":
             self.send_response(200)
             self.end_headers()
             self.wfile.write(b"Deployment started")
