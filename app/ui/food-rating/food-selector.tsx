@@ -72,12 +72,35 @@ export default function FoodSelector()
         isSoup: 0
     });
 
+    // Save answers to local storage
+    const saveAnswersToLocalStorage = (foodId: string, answers: FormAnswer) => {
+        localStorage.setItem(`food-rating-${foodId}`, JSON.stringify(answers));
+    };
+
+    // Load answers from local storage
+    const loadAnswersFromLocalStorage = (foodId: string): FormAnswer | null => {
+        const savedAnswers = localStorage.getItem(`food-rating-${foodId}`);
+        return savedAnswers ? JSON.parse(savedAnswers) : null;
+    };
+
     const handleFoodOptionClick = (id: string, isSoup: boolean) =>
     {
-        setChosenAnswers(prev => ({
-            ...prev,
-            isSoup: isSoup ? 1 : 0
-        }));
+        // Try to load saved answers for this food
+        const savedAnswers = loadAnswersFromLocalStorage(id);
+
+        if (savedAnswers) {
+            // If we have saved answers, use them
+            setChosenAnswers({
+                ...savedAnswers,
+                isSoup: isSoup ? 1 : 0
+            });
+        } else {
+            // Otherwise, use default values
+            setChosenAnswers(prev => ({
+                ...prev,
+                isSoup: isSoup ? 1 : 0
+            }));
+        }
 
         setShowForm(true);
         handleSelect(id);
@@ -123,6 +146,9 @@ export default function FoodSelector()
             })
             .then(data =>
             {
+                // Clear saved answers from local storage after successful submission
+                localStorage.removeItem(`food-rating-${selectedId}`);
+
                 showAlertBubble("success", "Hodnocení odesláno!")
                 setShowForm(false)
                 setSelectedId('')
@@ -132,8 +158,34 @@ export default function FoodSelector()
 
     function handleDessertChange()
     {
-        setContainsDessert(!containsDessert)
-        chosenAnswers.desert = containsDessert ? 0 : -1
+        const newContainsDessert = !containsDessert;
+        setContainsDessert(newContainsDessert);
+
+        // Update chosen answers
+        const newAnswers = {
+            ...chosenAnswers,
+            desert: newContainsDessert ? 0 : -1
+        };
+        setChosenAnswers(newAnswers);
+
+        // Save to local storage
+        if (selectedId) {
+            saveAnswersToLocalStorage(selectedId, newAnswers);
+        }
+    }
+
+    // Function to update a specific rating and save to local storage
+    const updateRating = (key: keyof FormAnswer, value: number) => {
+        const newAnswers = {
+            ...chosenAnswers,
+            [key]: value
+        };
+        setChosenAnswers(newAnswers);
+
+        // Save to local storage
+        if (selectedId) {
+            saveAnswersToLocalStorage(selectedId, newAnswers);
+        }
     }
 
     function showResponseMessage(response: Response)
@@ -225,14 +277,16 @@ export default function FoodSelector()
                     <FoodFormQuestion>
                         <label className={ foodFormStyles.questionLabel }>Byla porce uspokojivá?</label>
                         <RatingSlider labelMap={ ratingLabelMap }
-                                      onChange={ val => chosenAnswers.ration = val }></RatingSlider>
+                                      onChange={ val => updateRating('ration', val) }
+                                      initialValue={ chosenAnswers.ration }></RatingSlider>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
                         <label className={ foodFormStyles.questionLabel }>Bylo jídlo chutné?</label>
                         <FoodFormQuestionAnswerContainer>
                             <RatingSlider labelMap={ ratingLabelMap }
-                                          onChange={ val => chosenAnswers.taste = val }></RatingSlider>
+                                          onChange={ val => updateRating('taste', val) }
+                                          initialValue={ chosenAnswers.taste }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
@@ -241,7 +295,8 @@ export default function FoodSelector()
                             připlatit?</label>
                         <FoodFormQuestionAnswerContainer>
                             <RatingSlider labelMap={ ratingLabelMap }
-                                          onChange={ val => chosenAnswers.price = val }></RatingSlider>
+                                          onChange={ val => updateRating('price', val) }
+                                          initialValue={ chosenAnswers.price }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
@@ -249,7 +304,8 @@ export default function FoodSelector()
                         <label className={ foodFormStyles.questionLabel }>Mělo jídlo správnou teplotu?</label>
                         <FoodFormQuestionAnswerContainer>
                             <RatingSlider labelMap={ ratingLabelMap }
-                                          onChange={ val => chosenAnswers.temperature = val }></RatingSlider>
+                                          onChange={ val => updateRating('temperature', val) }
+                                          initialValue={ chosenAnswers.temperature }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
@@ -257,7 +313,8 @@ export default function FoodSelector()
                         <label className={ foodFormStyles.questionLabel }>Vypadala prezentace jídla chutně ?</label>
                         <FoodFormQuestionAnswerContainer>
                             <RatingSlider labelMap={ ratingLabelMap }
-                                          onChange={ val => chosenAnswers.looks = val }></RatingSlider>
+                                          onChange={ val => updateRating('looks', val) }
+                                          initialValue={ chosenAnswers.looks }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
@@ -266,7 +323,8 @@ export default function FoodSelector()
                             <label className={ foodFormStyles.questionLabel }>Byl dezert také chutný?</label>
                             <FoodFormQuestionAnswerContainer>
                                 <RatingSlider labelMap={ ratingLabelMap }
-                                              onChange={ val => chosenAnswers.desert = val }></RatingSlider>
+                                              onChange={ val => updateRating('desert', val) }
+                                              initialValue={ chosenAnswers.desert >= 0 ? chosenAnswers.desert : 0 }></RatingSlider>
                             </FoodFormQuestionAnswerContainer>
                         </FoodFormQuestion>
                     ) }

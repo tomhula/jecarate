@@ -23,7 +23,7 @@ services:
       MYSQL_USER: jecarateuser
       MYSQL_PASSWORD: jecarateuserpassword
     healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      test: [ "CMD", "mysqladmin" ,"ping", "-u", "$MYSQL_USER", "--password=$MYSQL_PASSWORD"]
       timeout: 5s
       retries: 5
     volumes:
