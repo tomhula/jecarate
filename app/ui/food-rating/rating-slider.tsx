@@ -1,20 +1,30 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import foodFormStyles from "@/app/ui/food-rating/food-rating.module.css";
 
 interface StepSliderProps
 {
     labelMap: (value: number) => string;
     onChange: (value: number) => void;
+    initialValue?: number;
 }
 
-export default function StepSlider({labelMap, onChange}: StepSliderProps)
+export default function StepSlider({labelMap, onChange, initialValue = 0}: StepSliderProps)
 {
     const [selected, setSelected] = useState(false);
-    const [currentValue, setCurrentValue] = useState(0);
+    const [currentValue, setCurrentValue] = useState(initialValue);
     const selectedColors = ["#ff6666", "#ff9933", "#fae45b", "#66cc66"];
     const unselectedColors = ["#ff9999", "#ffcccc", "#ffffcc", "#99ff99"];
     const colors = selected ? selectedColors : unselectedColors;
     const stepPositions = [0, 33.33, 66.66, 100];
+
+    // Update currentValue when initialValue changes
+    useEffect(() => {
+        setCurrentValue(initialValue);
+        // Set selected to true if initialValue is not the default value (0)
+        if (initialValue !== 0) {
+            setSelected(true);
+        }
+    }, [initialValue]);
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) =>
     {
