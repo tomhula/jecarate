@@ -1,4 +1,4 @@
-# JeCarate - Canteen Food Rating Application
+# Jecarate - Canteen Food Rating Application
 
 JeCarate is a web application designed for rating canteen meals. It allows users to provide feedback on various aspects of their dining experience, including portion size, taste, temperature, presentation, and value for money.
 
@@ -50,7 +50,7 @@ The interface is primarily in Czech, targeting Czech educational or workplace ca
 
 2. Start the application using Docker Compose:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
    This command will:
