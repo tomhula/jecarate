@@ -135,12 +135,12 @@ export default function Dashboard() {
 
     return (
         <>
-            <div className={dashboardStyles.dashboardHeader}>Katalog objedů</div>
+            <div className={dashboardStyles.dashboardHeader}>Katalog obědů</div>
             <button
                 className={dashboardStyles.rateButton}
                 onClick={() => window.location.href = '/food-rating'}
             >
-                Ohodnotit dnešní objed
+                Ohodnotit dnešní oběd
             </button>
             <div className={dashboardStyles.searchContainer}>
                 <input
