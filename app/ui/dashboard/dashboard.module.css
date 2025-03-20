@@ -162,3 +162,54 @@
         transform: scale(1);
     }
 }
+
+/* Statistic.module.css */
+.statisticCard {
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    max-width: 600px;
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.question {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap; /* Keep the question in one line */
+}
+
+.ratingsList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.ratingItem {
+    background: #f1f5f9;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.ratingValue {
+    font-weight: bold;
+    color: #2563eb;
+}
+.highlighted {
+    background-color: #4caf50; /* Green color for the highest rating */
+    color: white;
+    font-weight: bold;
+}

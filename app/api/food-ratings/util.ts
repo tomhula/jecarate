@@ -24,3 +24,14 @@ export async function findFoodIdOrCreate(foodId: string, isSoup: number): Promis
     }
     return queryResult[0].id;
 }
+
+export async function findRatingsByPattern(patterns: string[]): Promise<any[]> {
+    const regexPattern = patterns.join("|");
+
+    const [queryResult] = await query(
+        "SELECT * FROM all_ratings WHERE food_name REGEXP ?",
+        [regexPattern]
+    ) as any[];
+
+    return queryResult; // Return all matching ratings
+}

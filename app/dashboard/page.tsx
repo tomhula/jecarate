@@ -4,6 +4,7 @@ import LunchGrid from "@/app/ui/dashboard/lunch-grid"
 import dashboardStyles from "@/app/ui/dashboard/dashboard.module.css"
 import { useEffect, useState } from "react"
 import { authorize } from "@/app/index.client"
+import Statistic from "@/app/ui/dashboard/statistics-card"
 
 // Define types for better code organization
 export type Rating = {
@@ -157,6 +158,14 @@ export default function Dashboard() {
                     onChange={handleSearchDateChange}
                 />
             </div>
+            <Statistic
+                question="Které maso je nejoblíbenější?"
+                regex={["rybí", "ryba", "kachní", "vepřové", "vepřový", "kuře", "kuřečí", "hovězí", "husa"]}
+            />
+            <Statistic
+                question="Jaká příloha je nejoblíbenější?"
+                regex={["brambory", "rýže", "těstoviny", "knedlíky"]}
+            />
             <LunchGrid ratings={filteredRatings} />
         </>
     )
