@@ -44,7 +44,7 @@ The interface is primarily in Czech, targeting Czech educational or workplace ca
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/tomhula/jecarate
    cd jecarate
    ```
 
