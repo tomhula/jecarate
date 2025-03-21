@@ -278,7 +278,7 @@ export default function FoodSelector()
                         <label className={ foodFormStyles.questionLabel }>Byla porce uspokojivá?</label>
                         <RatingSlider labelMap={ ratingLabelMap }
                                       onChange={ val => updateRating('ration', val) }
-                                      initialValue={ chosenAnswers.ration }></RatingSlider>
+                                      initialValue={ chosenAnswers.ration ?? 0 }></RatingSlider>
                     </FoodFormQuestion>
 
                     <FoodFormQuestion>
@@ -286,7 +286,7 @@ export default function FoodSelector()
                         <FoodFormQuestionAnswerContainer>
                             <RatingSlider labelMap={ ratingLabelMap }
                                           onChange={ val => updateRating('taste', val) }
-                                          initialValue={ chosenAnswers.taste }></RatingSlider>
+                                          initialValue={ chosenAnswers.taste ?? 0 }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
@@ -296,7 +296,7 @@ export default function FoodSelector()
                         <FoodFormQuestionAnswerContainer>
                             <RatingSlider labelMap={ ratingLabelMap }
                                           onChange={ val => updateRating('price', val) }
-                                          initialValue={ chosenAnswers.price }></RatingSlider>
+                                          initialValue={ chosenAnswers.price ?? 0 }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
@@ -305,7 +305,7 @@ export default function FoodSelector()
                         <FoodFormQuestionAnswerContainer>
                             <RatingSlider labelMap={ ratingLabelMap }
                                           onChange={ val => updateRating('temperature', val) }
-                                          initialValue={ chosenAnswers.temperature }></RatingSlider>
+                                          initialValue={ chosenAnswers.temperature ?? 0 }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
@@ -314,7 +314,7 @@ export default function FoodSelector()
                         <FoodFormQuestionAnswerContainer>
                             <RatingSlider labelMap={ ratingLabelMap }
                                           onChange={ val => updateRating('looks', val) }
-                                          initialValue={ chosenAnswers.looks }></RatingSlider>
+                                          initialValue={ chosenAnswers.looks ?? 0 }></RatingSlider>
                         </FoodFormQuestionAnswerContainer>
                     </FoodFormQuestion>
 
@@ -324,7 +324,7 @@ export default function FoodSelector()
                             <FoodFormQuestionAnswerContainer>
                                 <RatingSlider labelMap={ ratingLabelMap }
                                               onChange={ val => updateRating('desert', val) }
-                                              initialValue={ chosenAnswers.desert >= 0 ? chosenAnswers.desert : 0 }></RatingSlider>
+                                              initialValue={ chosenAnswers.desert ?? 0 }></RatingSlider>
                             </FoodFormQuestionAnswerContainer>
                         </FoodFormQuestion>
                     ) }
