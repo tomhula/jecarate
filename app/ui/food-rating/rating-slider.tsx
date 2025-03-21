@@ -5,47 +5,39 @@ interface StepSliderProps
 {
     labelMap: (value: number) => string;
     onChange: (value: number) => void;
-    initialValue?: number | null;
+    value?: number | null;
 }
 
-export default function StepSlider({labelMap, onChange, initialValue = null}: StepSliderProps)
+export default function StepSlider({labelMap, onChange, value}: StepSliderProps)
 {
-    const [selected, setSelected] = useState(false);
-    const [currentValue, setCurrentValue] = useState(initialValue !== null ? initialValue : 0);
+    const [metaValue, setMetaValue] = useState(value ?? 0);
     const selectedColors = ["#ff6666", "#ff9933", "#fae45b", "#66cc66"];
     const unselectedColors = ["#ff9999", "#ffcccc", "#ffffcc", "#99ff99"];
-    const colors = selected ? selectedColors : unselectedColors;
+    const colors = value != null ? selectedColors : unselectedColors;
     const stepPositions = [0, 33.33, 66.66, 100];
 
-    // Update currentValue when initialValue changes
     useEffect(() => {
-        // Set currentValue to initialValue if it's not null, otherwise set to 0
-        setCurrentValue(initialValue !== null ? initialValue : 0);
-        // Set selected to true if initialValue is not null (meaning it has been rated)
-        setSelected(initialValue !== null);
-    }, [initialValue]);
+        setMetaValue(value ?? 0);
+    }, [value]);
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) =>
     {
-        const value = parseFloat(event.target.value);
-        setCurrentValue(value);
+        setMetaValue(parseFloat(event.target.value));
     };
 
     const handleChange = () =>
     {
-        if (!selected)
-            setSelected(true);
         // The timeout is needed, because one input change is triggered after mouseUp or touchEnd
         setTimeout(() =>
         {
-            const roundedValue = Math.round(currentValue);
-            setCurrentValue(roundedValue);
+            const roundedValue = Math.round(metaValue);
+            setMetaValue(roundedValue);
             onChange(roundedValue);
         }, 10);
     };
 
-    const currentColor = colors[Math.round(currentValue)];
-    const sliderPosition = stepPositions[Math.round(currentValue)];
+    const currentColor = colors[Math.round(metaValue)];
+    const sliderPosition = stepPositions[Math.round(metaValue)];
 
     return (
         <div className={foodFormStyles.ratingSlider} style={{position: "relative", width: "320px", textAlign: "center"}}>
@@ -70,7 +62,7 @@ export default function StepSlider({labelMap, onChange, initialValue = null}: St
                 min="0"
                 max="3"
                 step="0.01"
-                value={currentValue}
+                value={metaValue}
                 onInput={handleInput}
                 onMouseUp={handleChange}
                 onTouchEnd={handleChange}
@@ -124,7 +116,7 @@ export default function StepSlider({labelMap, onChange, initialValue = null}: St
                     transition: "left 0.3s ease, color 0.3s ease",
                 }}
             >
-                {labelMap(Math.round(currentValue))}
+                {labelMap(Math.round(metaValue))}
             </div>
         </div>
     );
