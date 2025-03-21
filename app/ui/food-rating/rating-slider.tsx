@@ -5,13 +5,13 @@ interface StepSliderProps
 {
     labelMap: (value: number) => string;
     onChange: (value: number) => void;
-    initialValue?: number;
+    initialValue?: number | null;
 }
 
-export default function StepSlider({labelMap, onChange, initialValue = 0}: StepSliderProps)
+export default function StepSlider({labelMap, onChange, initialValue = null}: StepSliderProps)
 {
     const [selected, setSelected] = useState(false);
-    const [currentValue, setCurrentValue] = useState(initialValue);
+    const [currentValue, setCurrentValue] = useState(initialValue !== null ? initialValue : 0);
     const selectedColors = ["#ff6666", "#ff9933", "#fae45b", "#66cc66"];
     const unselectedColors = ["#ff9999", "#ffcccc", "#ffffcc", "#99ff99"];
     const colors = selected ? selectedColors : unselectedColors;
@@ -19,11 +19,10 @@ export default function StepSlider({labelMap, onChange, initialValue = 0}: StepS
 
     // Update currentValue when initialValue changes
     useEffect(() => {
-        setCurrentValue(initialValue);
-        // Set selected to true if initialValue is not the default value (0)
-        if (initialValue !== 0) {
-            setSelected(true);
-        }
+        // Set currentValue to initialValue if it's not null, otherwise set to 0
+        setCurrentValue(initialValue !== null ? initialValue : 0);
+        // Set selected to true if initialValue is not null (meaning it has been rated)
+        setSelected(initialValue !== null);
     }, [initialValue]);
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) =>
