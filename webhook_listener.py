@@ -30,7 +30,7 @@ class WebhookHandler(BaseHTTPRequestHandler):
 
         data = json.loads(payload)
 
-        # Check if this is a push to the 'dev' branch
+        # Check if this is a push to the 'main' branch
         if data.get("ref") == "refs/heads/main":
             self.send_response(200)
             self.end_headers()
